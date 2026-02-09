@@ -19,3 +19,6 @@ __pycache__/
 # Environment
 .env
 .env.local
+
+# Claude Code files
+CLAUDE.md
