@@ -226,21 +226,6 @@ docs/ai-use-cases/
 - [Category 12: AI-Powered Testing](./category-12-ai-powered-testing.md)
 - [Category 13: Advanced AI Features](./category-13-advanced-ai-features.md)
 
-## 🤝 Contributing
-
-When adding new AI use cases:
-1. Follow the standard template (see category-01-drift-analysis.md)
-2. Include: Description, Business Value, Implementation, LLM Integration, Dependencies, Success Metrics
-3. Update this README with the new use case count
-4. Add to appropriate priority level
-
-## 📞 Support
-
-For questions about AI use cases:
-- Technical lead: [Contact Info]
-- AI/ML specialist: [Contact Info]
-- Product owner: [Contact Info]
-
 ---
 
 **Last Updated:** February 9, 2026

@@ -8,7 +8,6 @@ This document provides a comprehensive overview of the **60 AI-powered use cases
 
 - **Total AI Use Cases:** 60
 - **Categories:** 13
-- **Monthly AI Cost:** ~$170 (for 100 projects)
 - **Expected Productivity Gain:** 5-10x
 
 ## Use Cases by Category
