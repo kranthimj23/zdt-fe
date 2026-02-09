@@ -110,7 +110,7 @@ Output: Array of test objects with testFile, testCode, and description
 
 ### Dependencies
 - Source code access
-- OpenAI/Anthropic API (for code understanding)
+- Google Gemini/Anthropic API (for code understanding)
 - Test framework libraries
 - Code coverage tools
 - CI/CD pipeline for test execution
@@ -311,7 +311,7 @@ Pattern Detection:
 - Test execution history (30+ runs per test)
 - CI/CD pipeline logs
 - Environment metadata per test run
-- OpenAI/Anthropic API for fix suggestions
+- Google Gemini/Anthropic API for fix suggestions
 
 ### Success Metrics
 - 95% accuracy in flaky test identification
@@ -427,7 +427,7 @@ Output: JSON with gaps, risk levels, and test suggestions
 - Code coverage tools (Istanbul, Coverage.py, JaCoCo)
 - Source code analysis
 - Critical path definitions
-- OpenAI/Anthropic API
+- Google Gemini/Anthropic API
 
 ### Success Metrics
 - 90% of high-risk gaps identified correctly
@@ -572,7 +572,7 @@ Output: JSON with per-change assessment (intentional: boolean, severity, descrip
 - Image comparison library (pixelmatch, resemble.js)
 - Vision model for change classification
 - Storage for baseline and diff images
-- OpenAI/Anthropic API for analysis
+- Google Gemini/Anthropic API for analysis
 
 ### Success Metrics
 - 95% accuracy in regression detection
@@ -686,7 +686,7 @@ Output: JSON load test configuration
 - Load testing tool (k6, Locust, Gatling)
 - Production traffic analysis (Prometheus)
 - Kubernetes metrics
-- OpenAI/Anthropic API for scenario generation
+- Google Gemini/Anthropic API for scenario generation
 
 ### Success Metrics
 - 90% similarity between generated and real traffic patterns
@@ -815,7 +815,7 @@ Output: JSON with hypothesis, experiment design, and success criteria
 - Kubernetes API for pod/network manipulation
 - Prometheus for metric monitoring
 - Service dependency graph
-- OpenAI/Anthropic API for experiment design
+- Google Gemini/Anthropic API for experiment design
 
 ### Success Metrics
 - 3+ vulnerabilities discovered per quarter
@@ -927,7 +927,7 @@ For each journey:
 - Browser automation (Playwright, Puppeteer)
 - Scheduling system (cron/Bull)
 - Prometheus for metrics
-- OpenAI/Anthropic API for journey generation
+- Google Gemini/Anthropic API for journey generation
 - Alerting system (PagerDuty/Slack)
 
 ### Success Metrics
@@ -1039,7 +1039,7 @@ Output: JSON with contract test definitions
 - OpenAPI specifications
 - Consumer service registry
 - Pact or similar contract testing framework
-- OpenAI/Anthropic API
+- Google Gemini/Anthropic API
 
 ### Success Metrics
 - 100% of API endpoints covered by contract tests
@@ -1173,7 +1173,7 @@ Focus on mutations that simulate real bugs, not trivial syntactic changes.
 - Mutation testing framework (Stryker, mutmut, PIT)
 - Test execution environment
 - Source code parser
-- OpenAI/Anthropic API for smart mutation generation
+- Google Gemini/Anthropic API for smart mutation generation
 
 ### Success Metrics
 - Mutation score > 80% for critical code paths

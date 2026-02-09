@@ -102,8 +102,8 @@ Response:
 ### LLM Integration
 
 #### Provider
-- **Primary:** OpenAI GPT-4o
-- **Fallback:** Anthropic Claude 4.5 Sonnet
+- **Primary:** Google Gemini 3 Pro (gemini-3-pro)
+- **Fallback:** Anthropic Claude Opus 4.6
 
 #### Prompt Template
 ```
@@ -138,7 +138,7 @@ Output format: JSON matching the response schema
 
 ### Dependencies
 - Git repository access for commit history
-- OpenAI/Anthropic API key
+- Google Gemini/Anthropic API key
 - Redis for caching generated summaries
 - PostgreSQL for storing release notes history
 
@@ -285,7 +285,7 @@ Output format: JSON
 ### Dependencies
 - JIRA REST API access (API token)
 - Git repository access
-- OpenAI/Anthropic API
+- Google Gemini/Anthropic API
 - Redis cache for JIRA responses
 - PostgreSQL for enrichment history
 
@@ -419,7 +419,7 @@ Output format: JSON
 
 ### Dependencies
 - Git commit history access
-- OpenAI/Anthropic API (for ambiguous commits)
+- Google Gemini/Anthropic API (for ambiguous commits)
 - Conventional commit parser library
 
 ### Success Metrics
@@ -566,7 +566,7 @@ Output format: JSON matching the response schema
 - OpenAPI specification files
 - Team ownership registry
 - Git repository access
-- OpenAI/Anthropic API
+- Google Gemini/Anthropic API
 
 ### Success Metrics
 - 90% accuracy in identifying affected services
@@ -708,7 +708,7 @@ Output format: JSON matching the response schema
 ### Dependencies
 - Categorized changes (from UC-AI-009)
 - Impact assessment (from UC-AI-010)
-- OpenAI/Anthropic API
+- Google Gemini/Anthropic API
 - Template library for different output formats
 
 ### Success Metrics

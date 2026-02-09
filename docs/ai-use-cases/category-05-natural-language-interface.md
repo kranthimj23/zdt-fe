@@ -197,8 +197,8 @@ Do NOT make up deployment data.
 ```
 
 ### Dependencies
-- OpenAI GPT-4o (for function calling support)
-- Anthropic Claude 4.5 Sonnet (alternative)
+- Google Gemini 3 Pro (for function calling support)
+- Anthropic Claude Opus 4.6 (alternative)
 - Platform API access (all read endpoints)
 - Redis for conversation context (1-hour TTL)
 - PostgreSQL for conversation history
@@ -277,13 +277,13 @@ Response:
 
 **Speech-to-Text Pipeline:**
 ```
-User Audio → WebSocket → OpenAI Whisper API → Transcript
+User Audio → WebSocket → Google Cloud Speech-to-Text → Transcript
                                                   ↓
                                           Chat AI (UC-AI-019)
                                                   ↓
                                           Text Response
                                                   ↓
-                                    OpenAI TTS API → Audio Response
+                                    Google Cloud Text-to-Speech → Audio Response
                                                   ↓
                                           WebSocket → User Speaker
 ```
@@ -291,9 +291,9 @@ User Audio → WebSocket → OpenAI Whisper API → Transcript
 **Voice Processing Steps:**
 1. Capture audio via browser MediaRecorder API
 2. Stream audio chunks via WebSocket
-3. Transcribe with OpenAI Whisper (or browser SpeechRecognition API)
+3. Transcribe with Google Cloud Speech-to-Text (or browser SpeechRecognition API)
 4. Process transcript through Conversational AI (UC-AI-019)
-5. Convert response to speech with OpenAI TTS
+5. Convert response to speech with Google Cloud Text-to-Speech
 6. Stream audio response back to user
 
 #### Voice Command Examples
@@ -322,8 +322,8 @@ Additional guidelines for voice responses:
 ```
 
 ### Dependencies
-- OpenAI Whisper API (speech-to-text)
-- OpenAI TTS API (text-to-speech)
+- Google Cloud Speech-to-Text API
+- Google Cloud Text-to-Speech API
 - Browser MediaRecorder API
 - WebSocket for audio streaming
 - Conversational AI (UC-AI-019) for intent processing
@@ -338,9 +338,9 @@ Additional guidelines for voice responses:
 ### Implementation Steps
 1. Implement browser audio capture with MediaRecorder
 2. Build WebSocket audio streaming service
-3. Integrate OpenAI Whisper for transcription
+3. Integrate Google Cloud Speech-to-Text for transcription
 4. Connect transcript to chat AI pipeline (UC-AI-019)
-5. Implement OpenAI TTS for response audio
+5. Implement Google Cloud Text-to-Speech for response audio
 6. Build voice UI component (waveform, push-to-talk)
 7. Add wake word detection ("Hey Garuda")
 8. Optimize for platform-specific vocabulary

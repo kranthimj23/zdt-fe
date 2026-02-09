@@ -128,9 +128,9 @@ docs/ai-use-cases/
 ## 🏗️ AI Technology Stack
 
 ### LLM Providers
-- **OpenAI GPT-4o** - Primary LLM for analysis and generation
-- **Anthropic Claude 4.5 Sonnet** - Alternative for complex reasoning
-- **OpenAI GPT-4o mini** - Cost-effective fallback for simple tasks
+- **Google Gemini 3 Pro** - Primary LLM for analysis and generation
+- **Google Gemini 3 Flash** - Cost-effective option for simple tasks
+- **Anthropic Claude Opus 4.6** - Fallback for complex reasoning
 
 ### ML/AI Frameworks
 - **scikit-learn** - Classical ML (Random Forest, XGBoost)
@@ -186,7 +186,7 @@ docs/ai-use-cases/
 ### LLM Data Handling
 - ✅ Anonymize sensitive data before sending to LLM
 - ✅ Never send secrets, credentials, or PII
-- ✅ Use Azure OpenAI for enterprise data residency
+- ✅ Use Google Cloud AI Platform for enterprise data residency
 - ✅ Log all LLM requests for audit
 - ✅ Implement rate limiting and cost controls
 

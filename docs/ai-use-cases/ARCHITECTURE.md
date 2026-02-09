@@ -18,7 +18,7 @@ This document describes the AI/ML architecture for the Garuda.One platform, incl
 │                   Backend API (NestJS)                           │
 │  ┌──────────────────────────────────────────────────────────┐   │
 │  │           AI Service Layer (TypeScript)                   │   │
-│  │  - LLM Service (OpenAI/Claude integration)               │   │
+│  │  - LLM Service (Gemini/Claude integration)                │   │
 │  │  - Agent Orchestrator (LangChain/LangGraph)              │   │
 │  │  - ML Model Client (REST API calls)                      │   │
 │  │  - Vector Store Client (pgvector)                        │   │
@@ -38,7 +38,7 @@ This document describes the AI/ML architecture for the Garuda.One platform, incl
         ┌────────▼────────┐
         │  External APIs  │
         │                 │
-        │ - OpenAI API    │
+        │ - Gemini API    │
         │ - Claude API    │
         │ - Prometheus    │
         │ - JIRA API      │
@@ -272,15 +272,15 @@ interface AnomalyDetectionOutput {
 // Backend: NestJS Service
 @Injectable()
 export class LLMService {
-  private openai: OpenAI;
+  private gemini: GoogleGenerativeAI;
   private anthropic: Anthropic;
 
   constructor(
     private configService: ConfigService,
     private cacheService: CacheService,
   ) {
-    this.openai = new OpenAI({
-      apiKey: this.configService.get('OPENAI_API_KEY'),
+    this.gemini = new GoogleGenerativeAI({
+      apiKey: this.configService.get('GEMINI_API_KEY'),
     });
     this.anthropic = new Anthropic({
       apiKey: this.configService.get('ANTHROPIC_API_KEY'),
@@ -298,8 +298,8 @@ export class LLMService {
 
     // Make LLM call
     let response: LLMResponse;
-    if (provider === 'openai') {
-      response = await this.callOpenAI(params);
+    if (provider === 'gemini') {
+      response = await this.callGemini(params);
     } else {
       response = await this.callClaude(params);
     }
@@ -313,18 +313,18 @@ export class LLMService {
     return response;
   }
 
-  private selectProvider(task: string): 'openai' | 'anthropic' {
+  private selectProvider(task: string): 'gemini' | 'anthropic' {
     // Use Claude for complex reasoning
     if (task === 'root_cause_analysis' || task === 'code_review') {
       return 'anthropic';
     }
-    // Use OpenAI for general tasks
-    return 'openai';
+    // Use Gemini for general tasks
+    return 'gemini';
   }
 
-  private async callOpenAI(params: LLMCompletionParams): Promise<LLMResponse> {
-    const response = await this.openai.chat.completions.create({
-      model: params.model || 'gpt-4o',
+  private async callGemini(params: LLMCompletionParams): Promise<LLMResponse> {
+    const response = await this.gemini.generateContent({
+      model: params.model || 'gemini-3-pro',
       messages: params.messages,
       temperature: params.temperature || 0.7,
       max_tokens: params.maxTokens || 2000,
@@ -379,8 +379,8 @@ const functions = [
 ];
 
 // LLM decides which function to call
-const response = await openai.chat.completions.create({
-  model: 'gpt-4o',
+const response = await gemini.generateContent({
+  model: 'gemini-3-pro',
   messages: [
     { role: 'system', content: 'You are a deployment assistant.' },
     { role: 'user', content: 'What is deployed in UAT?' },
@@ -609,7 +609,7 @@ CREATE EXTENSION IF NOT EXISTS vector;
 CREATE TABLE drift_embeddings (
     id UUID PRIMARY KEY,
     drift_id UUID REFERENCES drift_reports(id),
-    embedding vector(1536),  -- OpenAI ada-002 dimension
+    embedding vector(768),  -- Gemini embedding dimension
     metadata JSONB,
     created_at TIMESTAMP DEFAULT NOW()
 );
@@ -624,11 +624,9 @@ WITH (lists = 100);
 ```typescript
 // Generate embedding
 async function generateEmbedding(text: string): Promise<number[]> {
-  const response = await openai.embeddings.create({
-    model: 'text-embedding-ada-002',
-    input: text,
-  });
-  return response.data[0].embedding;
+  const model = gemini.getGenerativeModel({ model: 'text-embedding-004' });
+  const result = await model.embedContent(text);
+  return result.embedding.values;
 }
 
 // Store drift embedding

@@ -150,7 +150,7 @@ Output format: JSON matching the plan schema
 - Drift detection system
 - Kubernetes API (kubectl/Helm) access
 - Approval workflow system
-- OpenAI/Anthropic API for plan generation
+- Google Gemini/Anthropic API for plan generation
 - PostgreSQL for execution history
 - WebSocket for real-time execution updates
 
@@ -313,7 +313,7 @@ Output format: JSON
 - Prometheus for real-time metrics
 - Kubernetes API for rollback execution
 - Anomaly detection (UC-AI-016)
-- OpenAI/Anthropic API for decision reasoning
+- Google Gemini/Anthropic API for decision reasoning
 - WebSocket for real-time status
 - PagerDuty/Slack for escalation
 
@@ -590,7 +590,7 @@ Output format: JSON with selectedTests and reasoning
 - Source code dependency graph
 - Historical test results database
 - Test coverage data
-- OpenAI/Anthropic API for change analysis
+- Google Gemini/Anthropic API for change analysis
 - CI/CD pipeline integration
 
 ### Success Metrics

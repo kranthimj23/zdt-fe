@@ -94,8 +94,8 @@ Response:
 ### LLM Integration
 
 #### Provider
-- **Primary:** OpenAI GPT-4o (gpt-4o)
-- **Fallback:** Anthropic Claude 4.5 Sonnet
+- **Primary:** Google Gemini 3 Pro (gemini-3-pro)
+- **Fallback:** Anthropic Claude Opus 4.6
 
 #### Context
 Drift report from `create-release-note.py` output (existing Python script)
@@ -142,7 +142,7 @@ Output format: JSON matching the response schema
 ### Dependencies
 - Drift detection script: `create-release-note.py` (existing)
 - PostgreSQL: Store drift reports
-- OpenAI API key or Anthropic API key
+- Google Gemini API key or Anthropic API key
 - Redis: Cache LLM responses (1 hour TTL)
 
 ### Success Metrics
@@ -153,7 +153,7 @@ Output format: JSON matching the response schema
 
 ### Implementation Steps
 1. Create `DriftExplainerService` in NestJS
-2. Integrate OpenAI API with retry logic
+2. Integrate Gemini API with retry logic
 3. Design prompt template with few-shot examples
 4. Implement caching layer (Redis)
 5. Build API endpoint with validation
@@ -363,7 +363,7 @@ Indicators of intentional changes:
 
   const response = await llmService.complete({
     prompt,
-    model: 'gpt-4o',
+    model: 'gemini-3-pro',
     temperature: 0.3, // Low temperature for factual analysis
   });
 
@@ -374,7 +374,7 @@ Indicators of intentional changes:
 ### Dependencies
 - Git repository access (promotion-repo)
 - JIRA API integration
-- OpenAI/Claude API
+- Google Gemini/Anthropic API
 - PostgreSQL for storing analysis results
 
 ### Success Metrics
@@ -1401,7 +1401,7 @@ Output format: JSON
 
   const response = await llmService.complete({
     prompt,
-    model: 'gpt-4o',
+    model: 'gemini-3-pro',
     temperature: 0.3, // Low temp for safe, deterministic output
   });
 
@@ -1512,7 +1512,7 @@ ws://api/v1/remediation/:executionId/status
 - **Safety:** Zero incidents caused by automated fixes
 
 ### Dependencies
-- LLM API (OpenAI/Claude)
+- LLM API (Google Gemini/Anthropic)
 - Kubectl/Helm access to clusters
 - Git repository write access
 - PostgreSQL for tracking executions

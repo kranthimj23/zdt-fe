@@ -151,7 +151,7 @@ Output format: JSON with action, priority, reasoning, and suggestedActions
 - Incident management system
 - Deployment history
 - Maintenance window calendar
-- OpenAI/Anthropic API
+- Google Gemini/Anthropic API
 - Redis for alert deduplication and state
 
 ### Success Metrics
@@ -313,7 +313,7 @@ Output format: JSON with notifications array
 - Service dependency graph (UC-AI-032)
 - Notification channels (Slack, email, PagerDuty, SMS)
 - User preferences database
-- OpenAI/Anthropic API
+- Google Gemini/Anthropic API
 
 ### Success Metrics
 - 100% of critical stakeholders notified for P1 incidents
@@ -488,7 +488,7 @@ Output format: JSON matching enrichedNotification schema
 - Prometheus metrics
 - Kubernetes API for pod/service status
 - Service dependency graph (UC-AI-032)
-- OpenAI/Anthropic API
+- Google Gemini/Anthropic API
 - Dashboard URL generator
 
 ### Success Metrics

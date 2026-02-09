@@ -149,7 +149,7 @@ Output format: JSON with predictions and recommendations
 - Prometheus for historical metrics (30-90 days)
 - Facebook Prophet for time-series forecasting
 - PostgreSQL for prediction storage
-- OpenAI/Anthropic API for summary generation
+- Google Gemini/Anthropic API for summary generation
 - Redis for caching predictions
 
 ### Success Metrics
@@ -305,7 +305,7 @@ Output format: JSON with recommendations and cost projections
 - Cloud provider pricing APIs (GCP/AWS/Azure)
 - Facebook Prophet for usage forecasting
 - Business growth projections
-- OpenAI/Anthropic API
+- Google Gemini/Anthropic API
 
 ### Success Metrics
 - 25% reduction in infrastructure waste
@@ -455,7 +455,7 @@ Output format: JSON with dependencies array
 - Kubernetes API for service discovery
 - Prometheus/Istio for network traffic data
 - Git repository for code analysis
-- OpenAI/Anthropic API
+- Google Gemini/Anthropic API
 - Graph database or PostgreSQL for dependency storage
 
 ### Success Metrics
@@ -617,7 +617,7 @@ Output format: JSON with phased deployment plan
 - Service dependency graph (UC-AI-032)
 - Deployment risk scores (UC-AI-012)
 - Kubernetes API for deployment execution
-- OpenAI/Anthropic API
+- Google Gemini/Anthropic API
 - Health check endpoints for each service
 
 ### Success Metrics

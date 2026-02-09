@@ -316,7 +316,7 @@ For each anomaly provide:
 - Configuration data store (PostgreSQL)
 - Historical configuration snapshots
 - Isolation Forest model (for complex patterns)
-- OpenAI/Anthropic API (for LLM analysis)
+- Google Gemini/Anthropic API (for LLM analysis)
 - Redis for caching cross-env comparisons
 
 ### Success Metrics
@@ -485,7 +485,7 @@ Output format: JSON
 - Prometheus for metrics collection
 - SciPy for statistical tests
 - Isolation Forest / Mahalanobis distance for ML detection
-- OpenAI/Anthropic API for root cause suggestions
+- Google Gemini/Anthropic API for root cause suggestions
 - PostgreSQL for storing comparison results
 
 ### Success Metrics

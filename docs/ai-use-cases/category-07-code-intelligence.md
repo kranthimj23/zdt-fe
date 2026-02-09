@@ -164,7 +164,7 @@ Do NOT flag standard logging, test code, or environment-specific configs.
 ### Dependencies
 - NVD / GitHub Advisory Database API
 - SAST tool integration (optional: Semgrep, SonarQube)
-- OpenAI/Anthropic API for LLM analysis
+- Google Gemini/Anthropic API for LLM analysis
 - Git diff access
 - PostgreSQL for vulnerability tracking
 
@@ -323,7 +323,7 @@ Also recommend semantic version bump: patch, minor, or major.
 - OpenAPI spec files (before/after)
 - Database migration files
 - API consumer registry
-- OpenAI/Anthropic API
+- Google Gemini/Anthropic API
 - Git diff access
 
 ### Success Metrics
@@ -482,7 +482,7 @@ Output format: JSON array of issues with severity, category, file, line, title, 
 ### Dependencies
 - Git diff access
 - Static analysis tools (ESLint, SonarQube) for baseline metrics
-- OpenAI/Anthropic API for LLM analysis
+- Google Gemini/Anthropic API for LLM analysis
 - PostgreSQL for tracking quality trends
 
 ### Success Metrics
@@ -637,7 +637,7 @@ Output format: JSON with per-dependency assessment and recommendations
 - NVD (National Vulnerability Database)
 - GitHub API (for maintainer activity)
 - License compatibility database
-- OpenAI/Anthropic API for analysis
+- Google Gemini/Anthropic API for analysis
 
 ### Success Metrics
 - 100% CVE detection for direct dependencies

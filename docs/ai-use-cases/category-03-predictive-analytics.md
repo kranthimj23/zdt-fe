@@ -428,7 +428,7 @@ Output format: JSON with steps, scripts, and verification checks
 - Deployment risk model (UC-AI-012)
 - Historical rollback data
 - Kubernetes/Helm access for script generation
-- OpenAI/Anthropic API for plan generation
+- Google Gemini/Anthropic API for plan generation
 
 ### Success Metrics
 - 80% accuracy in rollback probability prediction

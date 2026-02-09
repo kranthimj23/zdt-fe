@@ -161,7 +161,7 @@ Output format: JSON with patterns, insights, and recommendations
 - scikit-learn for statistical analysis
 - Pandas/NumPy for data processing
 - Facebook Prophet for trend decomposition
-- OpenAI/Anthropic API for insight generation
+- Google Gemini/Anthropic API for insight generation
 - PostgreSQL for deployment data
 
 ### Success Metrics
@@ -335,7 +335,7 @@ Output format: JSON with improvementPlan, checklist, and insights
 - Historical deployment database (500+ records)
 - XGBoost for feature importance
 - SHAP for model explanations
-- OpenAI/Anthropic API for recommendations
+- Google Gemini/Anthropic API for recommendations
 - PostgreSQL for data storage
 
 ### Success Metrics
@@ -511,8 +511,8 @@ Output format: JSON with failureModes, knowledgeBase, and recommendations
 - Incident management system (JIRA, PagerDuty)
 - Deployment history database
 - Post-mortem documentation
-- OpenAI text embeddings for clustering
-- OpenAI/Anthropic API for analysis
+- Gemini text embeddings for clustering
+- Google Gemini/Anthropic API for analysis
 - PostgreSQL for knowledge base storage
 
 ### Success Metrics

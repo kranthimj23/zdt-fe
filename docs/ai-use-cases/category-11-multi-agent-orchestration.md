@@ -165,7 +165,7 @@ Always explain your reasoning for scheduling decisions.
 - Deployment risk prediction (UC-AI-012)
 - Team calendar integration
 - JIRA API for task management
-- OpenAI/Anthropic API for planning
+- Google Gemini/Anthropic API for planning
 
 ### Success Metrics
 - 50% reduction in release planning time
@@ -809,7 +809,7 @@ Output format: JSON with detailed control assessments
 - Secret scanning tools
 - Deployment history
 - JIRA for change management tracking
-- OpenAI/Anthropic API
+- Google Gemini/Anthropic API
 - PDF generation for reports
 
 ### Success Metrics

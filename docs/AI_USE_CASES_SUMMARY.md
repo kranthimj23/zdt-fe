@@ -136,7 +136,7 @@ This document provides a comprehensive overview of the **60 AI-powered use cases
   - Sample queries: "What's deployed in UAT?", "Compare SIT vs PROD", "Generate release notes"
 
 - **UC-AI-020: Voice Commands**
-  - Speech-to-text with OpenAI Whisper
+  - Speech-to-text with Google Cloud Speech-to-Text
   - Voice-activated deployment queries
   - Text-to-speech responses
   - Hands-free platform interaction
@@ -358,9 +358,9 @@ This document provides a comprehensive overview of the **60 AI-powered use cases
 ## Technology Stack
 
 ### LLM Providers
-- **OpenAI GPT-4o** - Primary ($0.005/1K tokens)
-- **Anthropic Claude 4.5 Sonnet** - Alternative ($0.003/1K tokens)
-- **OpenAI GPT-4o mini** - Fallback ($0.00015/1K tokens)
+- **Google Gemini 3 Pro** - Primary ($0.005/1K tokens)
+- **Google Gemini 3 Flash** - Cost-effective ($0.00015/1K tokens)
+- **Anthropic Claude Opus 4.6** - Fallback ($0.003/1K tokens)
 
 ### ML/AI Frameworks
 - **XGBoost** - Risk prediction, classification
@@ -381,7 +381,7 @@ This document provides a comprehensive overview of the **60 AI-powered use cases
 ## Cost Breakdown
 
 ### Monthly Costs (100 projects)
-- OpenAI API calls: ~$20/month
+- LLM API calls: ~$20/month
 - ML model hosting: ~$100/month
 - Vector database: ~$50/month
 - **Total:** ~$170/month

@@ -156,7 +156,7 @@ Output: JSON with predictions, risks, and recommendations
 - Traffic replay tool (GoReplay, Toxiproxy)
 - Lightweight service simulation (WireMock, Docker)
 - Prometheus for metrics comparison
-- OpenAI/Anthropic API for analysis
+- Google Gemini/Anthropic API for analysis
 - Significant compute resources for simulation
 
 ### Success Metrics
@@ -311,7 +311,7 @@ Output: JSON with per-scenario predictions and overall recommendation
 - Traffic modeling (Prophet)
 - Service dependency graph
 - Cost calculation engine
-- OpenAI/Anthropic API
+- Google Gemini/Anthropic API
 
 ### Success Metrics
 - 80% accuracy in scenario outcome predictions
@@ -464,7 +464,7 @@ Output: JSON with diagnosis, healing action, and prevention
 - CI/CD pipeline API (Jenkins, GitHub Actions, GitLab CI)
 - Pipeline execution logs
 - Failure pattern database
-- OpenAI/Anthropic API for diagnosis
+- Google Gemini/Anthropic API for diagnosis
 - Docker/Kubernetes API for runner management
 
 ### Success Metrics
@@ -615,7 +615,7 @@ Output: JSON with optimized configuration and predictions
 - CI/CD build logs and metrics
 - Cache storage system (S3, GCS, local)
 - Build artifact analysis
-- OpenAI/Anthropic API
+- Google Gemini/Anthropic API
 
 ### Success Metrics
 - 40% reduction in average build times
@@ -770,7 +770,7 @@ Output: JSON with optimized allocation, migration plan, and projections
 - Traffic data (Prometheus)
 - SLA definitions
 - Optimization library (scipy, optuna)
-- OpenAI/Anthropic API
+- Google Gemini/Anthropic API
 
 ### Success Metrics
 - 25-35% cost reduction while maintaining SLAs
@@ -929,7 +929,7 @@ Output: JSON with prediction, confidence, and maintenance recommendation
 - Kubernetes resource metrics
 - Historical failure database
 - Prophet / LSTM for time-series prediction
-- OpenAI/Anthropic API
+- Google Gemini/Anthropic API
 
 ### Success Metrics
 - 80% of unplanned failures predicted 7+ days in advance
