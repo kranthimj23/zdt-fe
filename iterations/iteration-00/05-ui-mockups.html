@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Garuda.One - UI Mockups</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'sans-serif'] },
+          colors: {
+            sidebar: 'hsl(222.2, 84%, 4.9%)',
+            'sidebar-fg': 'hsl(210, 40%, 98%)',
+            accent: 'hsl(217.2, 91.2%, 59.8%)',
+            destructive: 'hsl(0, 84.2%, 60.2%)',
+            warning: 'hsl(38, 92%, 50%)',
+            success: 'hsl(142.1, 76.2%, 36.3%)',
+            muted: 'hsl(210, 40%, 96.1%)',
+            border: 'hsl(214.3, 31.8%, 91.4%)',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    * { box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; }
+    .screen { display: none; }
+    .screen.active { display: block; }
+    .nav-item { transition: background-color 0.15s, color 0.15s; }
+    .nav-item:hover { background-color: rgba(255,255,255,0.1); }
+    .nav-item.active { background-color: rgba(255,255,255,0.15); color: white; }
+    .pipeline-arrow { display: flex; align-items: center; color: #94a3b8; font-size: 24px; padding: 0 4px; }
+    .badge { display: inline-flex; align-items: center; padding: 2px 10px; border-radius: 9999px; font-size: 12px; font-weight: 500; }
+    .badge-green { background: #dcfce7; color: #166534; }
+    .badge-red { background: #fee2e2; color: #991b1b; }
+    .badge-amber { background: #fef3c7; color: #92400e; }
+    .badge-blue { background: #dbeafe; color: #1e40af; }
+    .badge-gray { background: #f1f5f9; color: #475569; }
+    .badge-outline { background: transparent; border: 1px solid #e2e8f0; color: #475569; }
+    .card { background: white; border: 1px solid #e2e8f0; border-radius: 8px; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: 6px; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.15s; border: none; }
+    .btn-primary { background: hsl(222.2, 84%, 4.9%); color: white; }
+    .btn-primary:hover { background: hsl(222.2, 84%, 12%); }
+    .btn-secondary { background: #f1f5f9; color: #0f172a; border: 1px solid #e2e8f0; }
+    .btn-secondary:hover { background: #e2e8f0; }
+    .btn-destructive { background: hsl(0, 84.2%, 60.2%); color: white; }
+    .btn-destructive:hover { background: hsl(0, 84.2%, 50%); }
+    .btn-outline { background: white; color: #0f172a; border: 1px solid #e2e8f0; }
+    .btn-outline:hover { background: #f8fafc; }
+    .btn-ghost { background: transparent; color: #64748b; }
+    .btn-ghost:hover { background: #f1f5f9; }
+    .input { width: 100%; padding: 8px 12px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 14px; outline: none; transition: border-color 0.15s; }
+    .input:focus { border-color: hsl(217.2, 91.2%, 59.8%); box-shadow: 0 0 0 2px hsla(217.2, 91.2%, 59.8%, 0.15); }
+    .input[disabled] { background: #f8fafc; color: #94a3b8; cursor: not-allowed; }
+    table { width: 100%; border-collapse: collapse; }
+    th { text-align: left; padding: 12px 16px; font-size: 12px; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid #e2e8f0; }
+    td { padding: 12px 16px; font-size: 14px; border-bottom: 1px solid #f1f5f9; }
+    tr:hover td { background: #f8fafc; }
+    .wizard-step { display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; }
+    .wizard-dot { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; }
+    .wizard-dot.completed { background: hsl(142.1, 76.2%, 36.3%); color: white; }
+    .wizard-dot.current { background: hsl(217.2, 91.2%, 59.8%); color: white; }
+    .wizard-dot.upcoming { background: #e2e8f0; color: #94a3b8; }
+    .wizard-line { width: 80px; height: 2px; margin-top: 15px; }
+    .wizard-line.completed { background: hsl(142.1, 76.2%, 36.3%); }
+    .wizard-line.upcoming { background: #e2e8f0; }
+    .json-viewer { background: #0f172a; color: #e2e8f0; padding: 20px; border-radius: 8px; font-family: 'Courier New', monospace; font-size: 13px; line-height: 1.6; overflow-x: auto; white-space: pre; }
+    .json-key { color: #7dd3fc; }
+    .json-string { color: #86efac; }
+    .json-number { color: #fbbf24; }
+    .json-bool { color: #c084fc; }
+    @media (max-width: 768px) {
+      .sidebar { transform: translateX(-100%); position: fixed; z-index: 40; }
+      .sidebar.open { transform: translateX(0); }
+      .main-content { margin-left: 0 !important; }
+      .mobile-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 30; }
+      .mobile-overlay.open { display: block; }
+    }
+  </style>
+</head>
+<body class="h-full bg-gray-50 text-slate-900">
+
+<!-- Mobile Overlay -->
+<div id="mobileOverlay" class="mobile-overlay" onclick="toggleSidebar()"></div>
+
+<!-- Header -->
+<header class="fixed top-0 left-0 right-0 h-14 bg-sidebar text-sidebar-fg border-b border-slate-700 flex items-center justify-between px-4 z-50">
+  <div class="flex items-center gap-3">
+    <button onclick="toggleSidebar()" class="md:hidden p-1.5 rounded hover:bg-white/10">
+      <i data-lucide="menu" class="w-5 h-5"></i>
+    </button>
+    <div class="flex items-center gap-2">
+      <div class="w-8 h-8 bg-accent rounded-lg flex items-center justify-center">
+        <i data-lucide="bird" class="w-5 h-5 text-white"></i>
+      </div>
+      <span class="font-semibold text-lg">Garuda.One</span>
+    </div>
+  </div>
+  <div class="flex items-center gap-2">
+    <button class="p-2 rounded hover:bg-white/10"><i data-lucide="help-circle" class="w-5 h-5"></i></button>
+    <div class="w-8 h-8 rounded-full bg-accent flex items-center justify-center text-sm font-semibold">KR</div>
+  </div>
+</header>
+
+<!-- Sidebar -->
+<aside id="sidebar" class="sidebar fixed top-14 left-0 bottom-0 w-64 bg-sidebar text-sidebar-fg border-r border-slate-700 overflow-y-auto transition-transform duration-200 z-40">
+  <nav class="py-4">
+    <!-- Main Nav -->
+    <div class="px-3 mb-2">
+      <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider px-3 mb-2">Main</p>
+      <a onclick="showScreen('projects')" class="nav-item flex items-center gap-3 px-3 py-2 rounded-md text-sm text-slate-300 cursor-pointer active" data-screen="projects">
+        <i data-lucide="folder-kanban" class="w-4 h-4"></i> Projects
+      </a>
+      <a onclick="showScreen('wizard')" class="nav-item flex items-center gap-3 px-3 py-2 rounded-md text-sm text-slate-300 cursor-pointer" data-screen="wizard">
+        <i data-lucide="wand-2" class="w-4 h-4"></i> New Project
+      </a>
+    </div>
+
+    <div class="border-t border-slate-700 my-3"></div>
+
+    <!-- Project Context -->
+    <div class="px-3 mb-2">
+      <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider px-3 mb-1">Project</p>
+      <p class="px-3 text-sm font-medium text-white mb-2">Payment Gateway</p>
+      <a onclick="showScreen('overview')" class="nav-item flex items-center gap-3 px-3 py-2 rounded-md text-sm text-slate-300 cursor-pointer" data-screen="overview">
+        <i data-lucide="layout-dashboard" class="w-4 h-4"></i> Overview
+      </a>
+      <a onclick="showScreen('promotion')" class="nav-item flex items-center gap-3 px-3 py-2 rounded-md text-sm text-slate-300 cursor-pointer" data-screen="promotion">
+        <i data-lucide="git-fork" class="w-4 h-4"></i> Promotion Repo
+      </a>
+      <a onclick="showScreen('repos')" class="nav-item flex items-center gap-3 px-3 py-2 rounded-md text-sm text-slate-300 cursor-pointer" data-screen="repos">
+        <i data-lucide="book-copy" class="w-4 h-4"></i> Source Repos
+      </a>
+      <a onclick="showScreen('environments')" class="nav-item flex items-center gap-3 px-3 py-2 rounded-md text-sm text-slate-300 cursor-pointer" data-screen="environments">
+        <i data-lucide="server" class="w-4 h-4"></i> Environments
+      </a>
+      <a onclick="showScreen('credentials')" class="nav-item flex items-center gap-3 px-3 py-2 rounded-md text-sm text-slate-300 cursor-pointer" data-screen="credentials">
+        <i data-lucide="key-round" class="w-4 h-4"></i> Credentials
+      </a>
+      <a onclick="showScreen('branches')" class="nav-item flex items-center gap-3 px-3 py-2 rounded-md text-sm text-slate-300 cursor-pointer" data-screen="branches">
+        <i data-lucide="git-branch" class="w-4 h-4"></i> Branch Tracker
+      </a>
+      <a onclick="showScreen('config')" class="nav-item flex items-center gap-3 px-3 py-2 rounded-md text-sm text-slate-300 cursor-pointer" data-screen="config">
+        <i data-lucide="file-json" class="w-4 h-4"></i> Config Export
+      </a>
+    </div>
+
+    <div class="border-t border-slate-700 my-3"></div>
+
+    <div class="px-3">
+      <a onclick="showScreen('settings')" class="nav-item flex items-center gap-3 px-3 py-2 rounded-md text-sm text-slate-300 cursor-pointer" data-screen="settings">
+        <i data-lucide="settings" class="w-4 h-4"></i> Settings
+      </a>
+    </div>
+  </nav>
+</aside>
+
+<!-- Main Content -->
+<main id="mainContent" class="main-content ml-64 mt-14 min-h-screen">
+
+<!-- ==================== SCREEN 1: Project List ==================== -->
+<section id="screen-projects" class="screen active p-6">
+  <div class="flex items-center gap-2 text-sm text-slate-500 mb-6">
+    <span>Projects</span>
+  </div>
+  <div class="flex items-center justify-between mb-6">
+    <h1 class="text-3xl font-bold tracking-tight">Projects</h1>
+    <button class="btn btn-primary" onclick="showScreen('wizard')">
+      <i data-lucide="plus" class="w-4 h-4"></i> New Project
+    </button>
+  </div>
+  <div class="flex flex-col sm:flex-row gap-4 mb-6">
+    <div class="flex-1">
+      <input type="search" class="input" placeholder="Search projects...">
+    </div>
+    <div class="flex gap-2">
+      <select class="input" style="width:auto">
+        <option>All Status</option><option>Active</option><option>Inactive</option><option>Archived</option>
+      </select>
+    </div>
+  </div>
+  <p class="text-sm text-slate-500 mb-4">Showing 3 projects</p>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <!-- Card 1 -->
+    <div class="card p-0 cursor-pointer hover:shadow-md transition-shadow" onclick="showScreen('overview')">
+      <div class="p-5">
+        <div class="flex items-start justify-between mb-1">
+          <h3 class="font-semibold text-lg">Payment Gateway</h3>
+          <span class="badge badge-green">Active</span>
+        </div>
+        <p class="text-sm text-slate-500 mb-4">payments-team</p>
+        <div class="flex gap-4 text-sm text-slate-600 mb-3">
+          <span class="flex items-center gap-1"><i data-lucide="book-copy" class="w-3.5 h-3.5"></i> 12 repos</span>
+          <span class="flex items-center gap-1"><i data-lucide="server" class="w-3.5 h-3.5"></i> 5 envs</span>
+        </div>
+        <div class="flex gap-2">
+          <span class="badge badge-green"><i data-lucide="check-circle-2" class="w-3 h-3 mr-1"></i>Verified</span>
+        </div>
+      </div>
+      <div class="border-t px-5 py-3 text-xs text-slate-400">Updated 2 hours ago</div>
+    </div>
+    <!-- Card 2 -->
+    <div class="card p-0 cursor-pointer hover:shadow-md transition-shadow">
+      <div class="p-5">
+        <div class="flex items-start justify-between mb-1">
+          <h3 class="font-semibold text-lg">Auth Service</h3>
+          <span class="badge badge-green">Active</span>
+        </div>
+        <p class="text-sm text-slate-500 mb-4">platform-team</p>
+        <div class="flex gap-4 text-sm text-slate-600 mb-3">
+          <span class="flex items-center gap-1"><i data-lucide="book-copy" class="w-3.5 h-3.5"></i> 3 repos</span>
+          <span class="flex items-center gap-1"><i data-lucide="server" class="w-3.5 h-3.5"></i> 4 envs</span>
+        </div>
+        <div class="flex gap-2">
+          <span class="badge badge-amber"><i data-lucide="alert-triangle" class="w-3 h-3 mr-1"></i>Unverified</span>
+        </div>
+      </div>
+      <div class="border-t px-5 py-3 text-xs text-slate-400">Updated 1 day ago</div>
+    </div>
+    <!-- Card 3 -->
+    <div class="card p-0 cursor-pointer hover:shadow-md transition-shadow">
+      <div class="p-5">
+        <div class="flex items-start justify-between mb-1">
+          <h3 class="font-semibold text-lg">Data Pipeline</h3>
+          <span class="badge badge-gray">Archived</span>
+        </div>
+        <p class="text-sm text-slate-500 mb-4">data-team</p>
+        <div class="flex gap-4 text-sm text-slate-600 mb-3">
+          <span class="flex items-center gap-1"><i data-lucide="book-copy" class="w-3.5 h-3.5"></i> 8 repos</span>
+          <span class="flex items-center gap-1"><i data-lucide="server" class="w-3.5 h-3.5"></i> 3 envs</span>
+        </div>
+      </div>
+      <div class="border-t px-5 py-3 text-xs text-slate-400">Updated 30 days ago</div>
+    </div>
+  </div>
+  <div class="flex items-center justify-center gap-2 mt-8">
+    <button class="btn btn-outline text-sm" disabled>&lt; Prev</button>
+    <button class="btn btn-primary text-sm">1</button>
+    <button class="btn btn-outline text-sm">2</button>
+    <button class="btn btn-outline text-sm">3</button>
+    <button class="btn btn-outline text-sm">Next &gt;</button>
+  </div>
+</section>
+
+<!-- ==================== SCREEN 2: Onboarding Wizard ==================== -->
+<section id="screen-wizard" class="screen p-6">
+  <div class="flex items-center gap-2 text-sm text-slate-500 mb-6">
+    <a class="hover:text-slate-700 cursor-pointer" onclick="showScreen('projects')">Projects</a>
+    <span>/</span><span>New Project</span>
+  </div>
+  <h1 class="text-3xl font-bold tracking-tight mb-8">New Project</h1>
+
+  <!-- Step Indicator -->
+  <div class="flex items-center justify-center mb-10">
+    <div class="wizard-step" onclick="showWizardStep(1)">
+      <div class="wizard-dot current" id="wdot1">1</div>
+      <span class="text-xs font-medium text-accent" id="wlabel1">Project Details</span>
+    </div>
+    <div class="wizard-line upcoming" id="wline1"></div>
+    <div class="wizard-step" onclick="showWizardStep(2)">
+      <div class="wizard-dot upcoming" id="wdot2">2</div>
+      <span class="text-xs text-slate-400" id="wlabel2">Promotion Repo</span>
+    </div>
+    <div class="wizard-line upcoming" id="wline2"></div>
+    <div class="wizard-step" onclick="showWizardStep(3)">
+      <div class="wizard-dot upcoming" id="wdot3">3</div>
+      <span class="text-xs text-slate-400" id="wlabel3">Source Repos</span>
+    </div>
+    <div class="wizard-line upcoming" id="wline3"></div>
+    <div class="wizard-step" onclick="showWizardStep(4)">
+      <div class="wizard-dot upcoming" id="wdot4">4</div>
+      <span class="text-xs text-slate-400" id="wlabel4">Environments</span>
+    </div>
+    <div class="wizard-line upcoming" id="wline4"></div>
+    <div class="wizard-step" onclick="showWizardStep(5)">
+      <div class="wizard-dot upcoming" id="wdot5">5</div>
+      <span class="text-xs text-slate-400" id="wlabel5">Credentials</span>
+    </div>
+  </div>
+
+  <!-- Step 1 -->
+  <div id="wizard-step-1" class="wizard-content card p-6 max-w-2xl mx-auto">
+    <h2 class="text-xl font-semibold mb-1">Step 1 of 5: Project Details</h2>
+    <p class="text-sm text-slate-500 mb-6">Basic information about your project.</p>
+    <div class="space-y-4">
+      <div>
+        <label class="block text-sm font-medium mb-1.5">Project Name <span class="text-destructive">*</span></label>
+        <input class="input" value="payment-gateway" placeholder="my-project">
+        <p class="text-xs text-slate-400 mt-1">Lowercase, alphanumeric with hyphens. Max 63 chars.</p>
+      </div>
+      <div>
+        <label class="block text-sm font-medium mb-1.5">Display Name <span class="text-destructive">*</span></label>
+        <input class="input" value="Payment Gateway Service">
+      </div>
+      <div>
+        <label class="block text-sm font-medium mb-1.5">Description</label>
+        <textarea class="input" rows="3" placeholder="Brief project description...">Centralized payment processing for all client applications</textarea>
+      </div>
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label class="block text-sm font-medium mb-1.5">Team <span class="text-destructive">*</span></label>
+          <input class="input" value="payments-team">
+        </div>
+        <div>
+          <label class="block text-sm font-medium mb-1.5">Team Email <span class="text-destructive">*</span></label>
+          <input class="input" value="pay-team@company.com" type="email">
+        </div>
+      </div>
+    </div>
+    <div class="flex justify-end gap-3 mt-8 pt-4 border-t">
+      <button class="btn btn-outline" onclick="showScreen('projects')">Cancel</button>
+      <button class="btn btn-primary" onclick="showWizardStep(2)">Next Step <i data-lucide="arrow-right" class="w-4 h-4"></i></button>
+    </div>
+  </div>
+
+  <!-- Step 2 -->
+  <div id="wizard-step-2" class="wizard-content card p-6 max-w-2xl mx-auto" style="display:none">
+    <h2 class="text-xl font-semibold mb-1">Step 2 of 5: Promotion Repository</h2>
+    <p class="text-sm text-slate-500 mb-6">The Helm chart repository that holds environment-specific values files.</p>
+    <div class="space-y-4">
+      <div>
+        <label class="block text-sm font-medium mb-1.5">Repository URL <span class="text-destructive">*</span></label>
+        <input class="input font-mono" value="https://github.com/org/promo-helm-charts.git">
+        <p class="text-xs text-slate-400 mt-1">Must be an HTTPS Git URL ending in .git</p>
+      </div>
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label class="block text-sm font-medium mb-1.5">Default Branch</label>
+          <input class="input" value="master">
+        </div>
+        <div>
+          <label class="block text-sm font-medium mb-1.5">Helm Charts Path</label>
+          <input class="input font-mono" value="helm-charts">
+        </div>
+      </div>
+      <div>
+        <label class="block text-sm font-medium mb-1.5">Meta Sheet Path <span class="text-slate-400">(optional)</span></label>
+        <input class="input font-mono" value="meta-sheet.xlsx">
+      </div>
+    </div>
+    <div class="flex justify-between mt-8 pt-4 border-t">
+      <button class="btn btn-ghost text-sm">Skip this step</button>
+      <div class="flex gap-3">
+        <button class="btn btn-outline" onclick="showWizardStep(1)"><i data-lucide="arrow-left" class="w-4 h-4"></i> Back</button>
+        <button class="btn btn-primary" onclick="showWizardStep(3)">Next Step <i data-lucide="arrow-right" class="w-4 h-4"></i></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 3 -->
+  <div id="wizard-step-3" class="wizard-content card p-6 max-w-2xl mx-auto" style="display:none">
+    <h2 class="text-xl font-semibold mb-1">Step 3 of 5: Source Repositories</h2>
+    <p class="text-sm text-slate-500 mb-6">Add the microservice repositories for this project.</p>
+    <div class="overflow-x-auto">
+      <table>
+        <thead><tr><th>#</th><th>Repository URL</th><th>Name</th><th>Type</th><th></th></tr></thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td><input class="input font-mono text-sm" value="https://github.com/org/svc-auth.git"></td>
+            <td><input class="input text-sm" value="service-auth"></td>
+            <td><select class="input text-sm" style="width:auto"><option>app</option><option>aql-db</option><option>sql-db</option><option>infra</option></select></td>
+            <td><button class="btn btn-ghost p-1"><i data-lucide="x" class="w-4 h-4"></i></button></td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td><input class="input font-mono text-sm" value="https://github.com/org/db-migrate.git"></td>
+            <td><input class="input text-sm" value="db-migrate"></td>
+            <td><select class="input text-sm" style="width:auto"><option>app</option><option>aql-db</option><option selected>sql-db</option><option>infra</option></select></td>
+            <td><button class="btn btn-ghost p-1"><i data-lucide="x" class="w-4 h-4"></i></button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <button class="btn btn-outline text-sm mt-3"><i data-lucide="plus" class="w-4 h-4"></i> Add Row</button>
+    <div class="flex items-center gap-2 my-4 text-sm text-slate-400"><div class="flex-1 h-px bg-slate-200"></div>OR<div class="flex-1 h-px bg-slate-200"></div></div>
+    <button class="btn btn-secondary text-sm"><i data-lucide="upload" class="w-4 h-4"></i> Import from text</button>
+    <div class="flex justify-between mt-8 pt-4 border-t">
+      <button class="btn btn-ghost text-sm">Skip this step</button>
+      <div class="flex gap-3">
+        <button class="btn btn-outline" onclick="showWizardStep(2)"><i data-lucide="arrow-left" class="w-4 h-4"></i> Back</button>
+        <button class="btn btn-primary" onclick="showWizardStep(4)">Next Step <i data-lucide="arrow-right" class="w-4 h-4"></i></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 4 -->
+  <div id="wizard-step-4" class="wizard-content card p-6 max-w-2xl mx-auto" style="display:none">
+    <h2 class="text-xl font-semibold mb-1">Step 4 of 5: Environments</h2>
+    <p class="text-sm text-slate-500 mb-4">Define the environment promotion pipeline.</p>
+    <button class="btn btn-secondary text-sm mb-4"><i data-lucide="layout-template" class="w-4 h-4"></i> Use Default Template</button>
+    <p class="text-xs text-slate-400 mb-4">Applies: dev &gt; sit &gt; uat &gt; pre-prod &gt; prod</p>
+    <div class="overflow-x-auto">
+      <table>
+        <thead><tr><th>#</th><th>Name</th><th>Display Name</th><th>Namespace</th><th>Cluster</th><th></th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td><input class="input text-sm" value="dev"></td><td><input class="input text-sm" value="Development"></td><td><input class="input text-sm" value="dev-ns"></td><td><input class="input text-sm" value="gke-dev"></td><td><button class="btn btn-ghost p-1"><i data-lucide="x" class="w-4 h-4"></i></button></td></tr>
+          <tr><td>2</td><td><input class="input text-sm" value="sit"></td><td><input class="input text-sm" value="System Integration Test"></td><td><input class="input text-sm" value="sit-ns"></td><td><input class="input text-sm" value="gke-sit"></td><td><button class="btn btn-ghost p-1"><i data-lucide="x" class="w-4 h-4"></i></button></td></tr>
+          <tr><td>3</td><td><input class="input text-sm" value="uat"></td><td><input class="input text-sm" value="User Acceptance Test"></td><td><input class="input text-sm" value="uat-ns"></td><td><input class="input text-sm" value="gke-uat"></td><td><button class="btn btn-ghost p-1"><i data-lucide="x" class="w-4 h-4"></i></button></td></tr>
+          <tr><td>4</td><td><input class="input text-sm" value="pre-prod"></td><td><input class="input text-sm" value="Pre-Production"></td><td><input class="input text-sm" value="preprod-ns"></td><td><input class="input text-sm" value="gke-preprod"></td><td><button class="btn btn-ghost p-1"><i data-lucide="x" class="w-4 h-4"></i></button></td></tr>
+          <tr><td>5</td><td><input class="input text-sm" value="prod"></td><td><input class="input text-sm" value="Production"></td><td><input class="input text-sm" value="prod-ns"></td><td><input class="input text-sm" value="gke-prod"></td><td><button class="btn btn-ghost p-1"><i data-lucide="x" class="w-4 h-4"></i></button></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <button class="btn btn-outline text-sm mt-3"><i data-lucide="plus" class="w-4 h-4"></i> Add Environment</button>
+    <p class="text-xs text-slate-400 mt-3">Promotion order is determined by row position (drag to reorder).</p>
+    <div class="flex justify-between mt-8 pt-4 border-t">
+      <button class="btn btn-ghost text-sm">Skip this step</button>
+      <div class="flex gap-3">
+        <button class="btn btn-outline" onclick="showWizardStep(3)"><i data-lucide="arrow-left" class="w-4 h-4"></i> Back</button>
+        <button class="btn btn-primary" onclick="showWizardStep(5)">Next Step <i data-lucide="arrow-right" class="w-4 h-4"></i></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 5 -->
+  <div id="wizard-step-5" class="wizard-content card p-6 max-w-2xl mx-auto" style="display:none">
+    <h2 class="text-xl font-semibold mb-1">Step 5 of 5: Credentials</h2>
+    <p class="text-sm text-slate-500 mb-6">Store credentials for accessing repositories and external services. Values are encrypted and never displayed again.</p>
+    <div class="space-y-4">
+      <div>
+        <label class="block text-sm font-medium mb-1.5">Credential Name <span class="text-destructive">*</span></label>
+        <input class="input" value="github-token">
+      </div>
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label class="block text-sm font-medium mb-1.5">Type <span class="text-destructive">*</span></label>
+          <select class="input"><option>git-token</option><option>jira-api-key</option><option>gcp-service-account</option><option>generic</option></select>
+        </div>
+        <div>
+          <label class="block text-sm font-medium mb-1.5">Expires At <span class="text-slate-400">(optional)</span></label>
+          <input class="input" type="date" value="2026-12-31">
+        </div>
+      </div>
+      <div>
+        <label class="block text-sm font-medium mb-1.5">Value <span class="text-destructive">*</span></label>
+        <div class="relative">
+          <input class="input font-mono pr-10" type="password" value="ghp_xxxxxxxxxxxxxxxxxxxx">
+          <button class="absolute right-2 top-1/2 -translate-y-1/2 btn btn-ghost p-1"><i data-lucide="eye" class="w-4 h-4"></i></button>
+        </div>
+        <p class="text-xs text-slate-400 mt-1">This value will be encrypted and cannot be viewed again.</p>
+      </div>
+    </div>
+    <button class="btn btn-outline text-sm mt-4"><i data-lucide="plus" class="w-4 h-4"></i> Add Another Credential</button>
+    <div class="mt-6">
+      <p class="text-sm font-medium mb-2">Added credentials:</p>
+      <table>
+        <thead><tr><th>Name</th><th>Type</th><th>Expires</th><th></th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="font-mono text-sm">github-token</td>
+            <td><span class="badge badge-outline">git-token</span></td>
+            <td>2026-12-31</td>
+            <td><button class="btn btn-ghost p-1 text-destructive"><i data-lucide="trash-2" class="w-4 h-4"></i></button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="flex justify-between mt-8 pt-4 border-t">
+      <button class="btn btn-ghost text-sm">Skip this step</button>
+      <div class="flex gap-3">
+        <button class="btn btn-outline" onclick="showWizardStep(4)"><i data-lucide="arrow-left" class="w-4 h-4"></i> Back</button>
+        <button class="btn btn-primary" onclick="showScreen('overview')">Finish Setup <i data-lucide="check" class="w-4 h-4"></i></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SCREEN 3: Project Overview ==================== -->
+<section id="screen-overview" class="screen p-6">
+  <div class="flex items-center gap-2 text-sm text-slate-500 mb-6">
+    <a class="hover:text-slate-700 cursor-pointer" onclick="showScreen('projects')">Projects</a>
+    <span>/</span><span>Payment Gateway Service</span>
+  </div>
+  <div class="flex items-start justify-between mb-2">
+    <div>
+      <div class="flex items-center gap-3 mb-1">
+        <h1 class="text-3xl font-bold tracking-tight">Payment Gateway Service</h1>
+        <span class="badge badge-green">Active</span>
+      </div>
+      <p class="text-sm text-slate-500">payments-team &middot; pay-team@company.com</p>
+      <p class="text-sm text-slate-500 mt-1">Centralized payment processing for all client applications</p>
+    </div>
+    <button class="btn btn-outline" onclick="showScreen('settings')"><i data-lucide="settings" class="w-4 h-4"></i> Settings</button>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+    <!-- Promotion Repo Card -->
+    <div class="card">
+      <div class="p-5 pb-3">
+        <div class="flex items-center gap-2 mb-3">
+          <i data-lucide="git-fork" class="w-5 h-5 text-slate-500"></i>
+          <h3 class="font-semibold">Promotion Repo</h3>
+        </div>
+        <p class="font-mono text-sm text-slate-600 mb-2">promo-helm-charts</p>
+        <span class="badge badge-green"><i data-lucide="check-circle-2" class="w-3 h-3 mr-1"></i>Verified</span>
+        <p class="text-xs text-slate-400 mt-2">Last check: 2h ago</p>
+      </div>
+      <div class="border-t px-5 py-3 flex gap-2">
+        <button class="btn btn-outline text-sm py-1.5" onclick="showScreen('promotion')">View</button>
+        <button class="btn btn-secondary text-sm py-1.5">Re-verify</button>
+      </div>
+    </div>
+    <!-- Source Repos Card -->
+    <div class="card">
+      <div class="p-5 pb-3">
+        <div class="flex items-center gap-2 mb-3">
+          <i data-lucide="book-copy" class="w-5 h-5 text-slate-500"></i>
+          <h3 class="font-semibold">Source Repos</h3>
+        </div>
+        <p class="text-2xl font-bold mb-1">12 <span class="text-sm font-normal text-slate-500">repositories</span></p>
+        <p class="text-sm text-slate-500">11 verified, 1 failed</p>
+        <div class="flex gap-3 text-xs text-slate-400 mt-2">
+          <span>app: 8</span><span>aql-db: 2</span><span>sql-db: 1</span><span>infra: 1</span>
+        </div>
+      </div>
+      <div class="border-t px-5 py-3">
+        <button class="btn btn-outline text-sm py-1.5" onclick="showScreen('repos')">View</button>
+      </div>
+    </div>
+    <!-- Environments Card -->
+    <div class="card">
+      <div class="p-5 pb-3">
+        <div class="flex items-center gap-2 mb-3">
+          <i data-lucide="server" class="w-5 h-5 text-slate-500"></i>
+          <h3 class="font-semibold">Environments</h3>
+        </div>
+        <p class="text-2xl font-bold mb-1">5 <span class="text-sm font-normal text-slate-500">configured</span></p>
+        <p class="text-sm text-slate-500 font-mono">dev &gt; sit &gt; uat &gt; pre-prod &gt; prod</p>
+      </div>
+      <div class="border-t px-5 py-3">
+        <button class="btn btn-outline text-sm py-1.5" onclick="showScreen('environments')">View</button>
+      </div>
+    </div>
+    <!-- Credentials Card -->
+    <div class="card">
+      <div class="p-5 pb-3">
+        <div class="flex items-center gap-2 mb-3">
+          <i data-lucide="key-round" class="w-5 h-5 text-slate-500"></i>
+          <h3 class="font-semibold">Credentials</h3>
+        </div>
+        <p class="text-2xl font-bold mb-1">2 <span class="text-sm font-normal text-slate-500">stored</span></p>
+        <div class="text-sm text-slate-500 space-y-1 mt-1">
+          <p class="font-mono">github-token <span class="text-xs text-slate-400">expires 2026-12</span></p>
+          <p class="font-mono">jira-api-key <span class="text-xs text-slate-400">no expiry</span></p>
+        </div>
+      </div>
+      <div class="border-t px-5 py-3">
+        <button class="btn btn-outline text-sm py-1.5" onclick="showScreen('credentials')">Manage</button>
+      </div>
+    </div>
+    <!-- Active Branches Card -->
+    <div class="card">
+      <div class="p-5 pb-3">
+        <div class="flex items-center gap-2 mb-3">
+          <i data-lucide="git-branch" class="w-5 h-5 text-slate-500"></i>
+          <h3 class="font-semibold">Active Branches</h3>
+        </div>
+        <div class="text-sm space-y-1 mt-1">
+          <p><span class="text-slate-500 w-12 inline-block">dev:</span> <span class="font-mono">release/2.0.0</span></p>
+          <p><span class="text-slate-500 w-12 inline-block">sit:</span> <span class="font-mono">release/1.0.0</span></p>
+          <p><span class="text-slate-500 w-12 inline-block">uat:</span> <span class="font-mono">release/1.0.0</span></p>
+          <p><span class="text-slate-500 w-12 inline-block">prod:</span> <span class="font-mono">release/0.9.0</span></p>
+        </div>
+      </div>
+      <div class="border-t px-5 py-3">
+        <button class="btn btn-outline text-sm py-1.5" onclick="showScreen('branches')">View All</button>
+      </div>
+    </div>
+    <!-- Config Export Card -->
+    <div class="card">
+      <div class="p-5 pb-3">
+        <div class="flex items-center gap-2 mb-3">
+          <i data-lucide="file-json" class="w-5 h-5 text-slate-500"></i>
+          <h3 class="font-semibold">Config Export</h3>
+        </div>
+        <p class="text-sm text-slate-500 mb-1">Full JSON available</p>
+        <p class="text-xs text-slate-400">Last exported: 30 min ago</p>
+      </div>
+      <div class="border-t px-5 py-3 flex gap-2">
+        <button class="btn btn-outline text-sm py-1.5" onclick="showScreen('config')">View</button>
+        <button class="btn btn-secondary text-sm py-1.5">Copy URL</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SCREEN 4: Project Settings ==================== -->
+<section id="screen-settings" class="screen p-6">
+  <div class="flex items-center gap-2 text-sm text-slate-500 mb-6">
+    <a class="hover:text-slate-700 cursor-pointer" onclick="showScreen('projects')">Projects</a>
+    <span>/</span>
+    <a class="hover:text-slate-700 cursor-pointer" onclick="showScreen('overview')">Payment Gateway</a>
+    <span>/</span><span>Settings</span>
+  </div>
+  <h1 class="text-3xl font-bold tracking-tight mb-8">Project Settings</h1>
+
+  <div class="card p-6 max-w-2xl mb-8">
+    <h2 class="text-lg font-semibold mb-6">General Information</h2>
+    <div class="space-y-4">
+      <div>
+        <label class="block text-sm font-medium mb-1.5">Project Name</label>
+        <input class="input" value="payment-gateway" disabled>
+        <p class="text-xs text-slate-400 mt-1">Cannot be changed after creation.</p>
+      </div>
+      <div>
+        <label class="block text-sm font-medium mb-1.5">Display Name <span class="text-destructive">*</span></label>
+        <input class="input" value="Payment Gateway Service">
+      </div>
+      <div>
+        <label class="block text-sm font-medium mb-1.5">Description</label>
+        <textarea class="input" rows="3">Centralized payment processing for all client applications</textarea>
+      </div>
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label class="block text-sm font-medium mb-1.5">Team <span class="text-destructive">*</span></label>
+          <input class="input" value="payments-team">
+        </div>
+        <div>
+          <label class="block text-sm font-medium mb-1.5">Team Email <span class="text-destructive">*</span></label>
+          <input class="input" value="pay-team@company.com" type="email">
+        </div>
+      </div>
+      <div>
+        <label class="block text-sm font-medium mb-1.5">Status</label>
+        <select class="input" style="width:auto"><option>Active</option><option>Inactive</option></select>
+      </div>
+    </div>
+    <div class="flex justify-end mt-6 pt-4 border-t">
+      <button class="btn btn-primary">Save Changes</button>
+    </div>
+  </div>
+
+  <div class="card p-6 max-w-2xl border-destructive border-2">
+    <h2 class="text-lg font-semibold text-destructive mb-2">Danger Zone</h2>
+    <h3 class="font-medium mb-2">Archive Project</h3>
+    <p class="text-sm text-slate-500 mb-4">
+      Archiving a project will hide it from the project list and prevent any downstream services from using its config.
+      This action can be reversed by a platform admin.
+    </p>
+    <div class="flex justify-end">
+      <button class="btn btn-destructive">Archive Project</button>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SCREEN 5: Promotion Repo ==================== -->
+<section id="screen-promotion" class="screen p-6">
+  <div class="flex items-center gap-2 text-sm text-slate-500 mb-6">
+    <a class="hover:text-slate-700 cursor-pointer" onclick="showScreen('projects')">Projects</a>
+    <span>/</span>
+    <a class="hover:text-slate-700 cursor-pointer" onclick="showScreen('overview')">Payment Gateway</a>
+    <span>/</span><span>Promotion Repo</span>
+  </div>
+  <div class="flex items-center justify-between mb-8">
+    <h1 class="text-3xl font-bold tracking-tight">Promotion Repository</h1>
+    <div class="flex gap-2">
+      <button class="btn btn-outline"><i data-lucide="pencil" class="w-4 h-4"></i> Edit</button>
+      <button class="btn btn-secondary"><i data-lucide="refresh-cw" class="w-4 h-4"></i> Verify</button>
+    </div>
+  </div>
+
+  <div class="card p-6 mb-6 max-w-3xl">
+    <h2 class="text-lg font-semibold mb-4">Repository Details</h2>
+    <div class="space-y-3">
+      <div class="flex">
+        <span class="w-36 text-sm font-medium text-slate-500 shrink-0">URL</span>
+        <span class="font-mono text-sm">https://github.com/org/promo-helm-charts.git</span>
+      </div>
+      <div class="flex">
+        <span class="w-36 text-sm font-medium text-slate-500 shrink-0">Default Branch</span>
+        <span class="text-sm">master</span>
+      </div>
+      <div class="flex">
+        <span class="w-36 text-sm font-medium text-slate-500 shrink-0">Helm Path</span>
+        <span class="font-mono text-sm">helm-charts</span>
+      </div>
+      <div class="flex">
+        <span class="w-36 text-sm font-medium text-slate-500 shrink-0">Meta Sheet</span>
+        <span class="font-mono text-sm">meta-sheet.xlsx</span>
+      </div>
+      <div class="border-t pt-3 mt-3 flex">
+        <span class="w-36 text-sm font-medium text-slate-500 shrink-0">Status</span>
+        <span class="flex items-center gap-2">
+          <span class="badge badge-green"><i data-lucide="check-circle-2" class="w-3 h-3 mr-1"></i>Verified</span>
+          <span class="text-sm text-slate-500">Connected successfully</span>
+        </span>
+      </div>
+      <div class="flex">
+        <span class="w-36 text-sm font-medium text-slate-500 shrink-0">Last Verified</span>
+        <span class="text-sm text-slate-500">2026-02-16 10:30 AM (2 hours ago)</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card p-6 max-w-3xl">
+    <h2 class="text-lg font-semibold mb-4">Detected Folder Structure</h2>
+    <pre class="font-mono text-sm bg-muted p-4 rounded-md text-slate-700 leading-relaxed">helm-charts/
+  ├── dev-values/
+  │   ├── app-values/
+  │   └── db-values/
+  ├── sit-values/
+  │   └── app-values/
+  ├── uat-values/
+  │   └── app-values/
+  └── prod-values/
+      ├── app-values/
+      └── db-values/</pre>
+  </div>
+</section>
+
+<!-- ==================== SCREEN 6: Source Repos ==================== -->
+<section id="screen-repos" class="screen p-6">
+  <div class="flex items-center gap-2 text-sm text-slate-500 mb-6">
+    <a class="hover:text-slate-700 cursor-pointer" onclick="showScreen('projects')">Projects</a>
+    <span>/</span>
+    <a class="hover:text-slate-700 cursor-pointer" onclick="showScreen('overview')">Payment Gateway</a>
+    <span>/</span><span>Source Repos</span>
+  </div>
+  <div class="flex items-center justify-between mb-4">
+    <h1 class="text-3xl font-bold tracking-tight">Source Repositories</h1>
+  </div>
+  <div class="flex flex-col sm:flex-row gap-3 mb-4">
+    <button class="btn btn-primary"><i data-lucide="plus" class="w-4 h-4"></i> Add Repo</button>
+    <button class="btn btn-secondary"><i data-lucide="upload" class="w-4 h-4"></i> Import Bulk</button>
+    <div class="flex-1"></div>
+    <select class="input" style="width:auto"><option>All Types</option><option>app</option><option>aql-db</option><option>sql-db</option><option>infra</option></select>
+    <input class="input" style="width:220px" placeholder="Filter repos...">
+  </div>
+
+  <div class="text-sm text-slate-500 mb-4 flex flex-wrap gap-3">
+    <span>12 total</span>
+    <span class="text-slate-300">|</span>
+    <span class="badge badge-blue">app: 8</span>
+    <span class="badge badge-outline">aql-db: 2</span>
+    <span class="badge badge-outline">sql-db: 1</span>
+    <span class="badge badge-outline">infra: 1</span>
+    <span class="text-slate-300">|</span>
+    <span class="text-success">11 verified</span>
+    <span class="text-destructive">1 failed</span>
+  </div>
+
+  <div class="card overflow-hidden">
+    <table>
+      <thead>
+        <tr class="bg-muted/50">
+          <th class="w-10"><input type="checkbox"></th>
+          <th class="w-10">#</th>
+          <th>Name</th>
+          <th>URL</th>
+          <th>Type</th>
+          <th>Status</th>
+          <th class="w-16"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><input type="checkbox"></td><td>1</td><td class="font-medium">service-auth</td><td class="font-mono text-sm text-slate-500">github.com/org/svc-auth</td><td><span class="badge badge-blue">app</span></td><td><span class="badge badge-green"><i data-lucide="check-circle-2" class="w-3 h-3"></i></span></td><td><button class="btn btn-ghost p-1"><i data-lucide="more-horizontal" class="w-4 h-4"></i></button></td></tr>
+        <tr><td><input type="checkbox"></td><td>2</td><td class="font-medium">service-admin</td><td class="font-mono text-sm text-slate-500">github.com/org/svc-admin</td><td><span class="badge badge-blue">app</span></td><td><span class="badge badge-green"><i data-lucide="check-circle-2" class="w-3 h-3"></i></span></td><td><button class="btn btn-ghost p-1"><i data-lucide="more-horizontal" class="w-4 h-4"></i></button></td></tr>
+        <tr><td><input type="checkbox"></td><td>3</td><td class="font-medium">service-pay</td><td class="font-mono text-sm text-slate-500">github.com/org/svc-pay</td><td><span class="badge badge-blue">app</span></td><td><span class="badge badge-green"><i data-lucide="check-circle-2" class="w-3 h-3"></i></span></td><td><button class="btn btn-ghost p-1"><i data-lucide="more-horizontal" class="w-4 h-4"></i></button></td></tr>
+        <tr><td><input type="checkbox"></td><td>4</td><td class="font-medium">service-notif</td><td class="font-mono text-sm text-slate-500">github.com/org/svc-notif</td><td><span class="badge badge-blue">app</span></td><td><span class="badge badge-red"><i data-lucide="x-circle" class="w-3 h-3"></i></span></td><td><button class="btn btn-ghost p-1"><i data-lucide="more-horizontal" class="w-4 h-4"></i></button></td></tr>
+        <tr><td><input type="checkbox"></td><td>5</td><td class="font-medium">service-report</td><td class="font-mono text-sm text-slate-500">github.com/org/svc-report</td><td><span class="badge badge-blue">app</span></td><td><span class="badge badge-green"><i data-lucide="check-circle-2" class="w-3 h-3"></i></span></td><td><button class="btn btn-ghost p-1"><i data-lucide="more-horizontal" class="w-4 h-4"></i></button></td></tr>
+        <tr><td><input type="checkbox"></td><td>6</td><td class="font-medium">db-migrate</td><td class="font-mono text-sm text-slate-500">github.com/org/db-mig</td><td><span class="badge badge-outline">sql-db</span></td><td><span class="badge badge-green"><i data-lucide="check-circle-2" class="w-3 h-3"></i></span></td><td><button class="btn btn-ghost p-1"><i data-lucide="more-horizontal" class="w-4 h-4"></i></button></td></tr>
+        <tr><td><input type="checkbox"></td><td>7</td><td class="font-medium">infra-tf</td><td class="font-mono text-sm text-slate-500">github.com/org/infra-tf</td><td><span class="badge badge-gray">infra</span></td><td><span class="badge badge-green"><i data-lucide="check-circle-2" class="w-3 h-3"></i></span></td><td><button class="btn btn-ghost p-1"><i data-lucide="more-horizontal" class="w-4 h-4"></i></button></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="flex items-center justify-between mt-4">
+    <p class="text-sm text-slate-500">Selected: 0 &nbsp; <button class="btn btn-outline text-sm py-1">Verify Selected</button> <button class="btn btn-outline text-sm py-1 text-destructive">Delete Selected</button></p>
+    <p class="text-sm text-slate-500">Showing 1-7 of 12</p>
+  </div>
+</section>
+
+<!-- ==================== SCREEN 7: Environments ==================== -->
+<section id="screen-environments" class="screen p-6">
+  <div class="flex items-center gap-2 text-sm text-slate-500 mb-6">
+    <a class="hover:text-slate-700 cursor-pointer" onclick="showScreen('projects')">Projects</a>
+    <span>/</span>
+    <a class="hover:text-slate-700 cursor-pointer" onclick="showScreen('overview')">Payment Gateway</a>
+    <span>/</span><span>Environments</span>
+  </div>
+  <div class="flex items-center justify-between mb-8">
+    <h1 class="text-3xl font-bold tracking-tight">Environments</h1>
+    <div class="flex gap-2">
+      <button class="btn btn-secondary"><i data-lucide="layout-template" class="w-4 h-4"></i> Apply Template</button>
+      <button class="btn btn-primary"><i data-lucide="plus" class="w-4 h-4"></i> Add Env</button>
+    </div>
+  </div>
+
+  <!-- Pipeline Visualization -->
+  <div class="card p-6 mb-8">
+    <h2 class="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-4">Promotion Pipeline</h2>
+    <div class="flex items-start justify-center flex-wrap gap-0 overflow-x-auto py-2">
+      <div class="flex flex-col items-center min-w-[100px]">
+        <div class="border-2 border-blue-300 bg-blue-50 rounded-lg p-3 text-center w-[100px]">
+          <p class="font-semibold text-sm">dev</p>
+          <p class="text-xs text-slate-500">Development</p>
+          <p class="text-xs text-slate-400 font-mono mt-1">dev-ns</p>
+        </div>
+        <p class="text-xs text-slate-400 mt-1">#1</p>
+      </div>
+      <div class="pipeline-arrow mt-5">&rarr;</div>
+      <div class="flex flex-col items-center min-w-[100px]">
+        <div class="border-2 border-blue-300 bg-blue-50 rounded-lg p-3 text-center w-[100px]">
+          <p class="font-semibold text-sm">sit</p>
+          <p class="text-xs text-slate-500">SIT</p>
+          <p class="text-xs text-slate-400 font-mono mt-1">sit-ns</p>
+        </div>
+        <p class="text-xs text-slate-400 mt-1">#2</p>
+      </div>
+      <div class="pipeline-arrow mt-5">&rarr;</div>
+      <div class="flex flex-col items-center min-w-[100px]">
+        <div class="border-2 border-blue-300 bg-blue-50 rounded-lg p-3 text-center w-[100px]">
+          <p class="font-semibold text-sm">uat</p>
+          <p class="text-xs text-slate-500">UAT</p>
+          <p class="text-xs text-slate-400 font-mono mt-1">uat-ns</p>
+        </div>
+        <p class="text-xs text-slate-400 mt-1">#3</p>
+      </div>
+      <div class="pipeline-arrow mt-5">&rarr;</div>
+      <div class="flex flex-col items-center min-w-[100px]">
+        <div class="border-2 border-amber-300 bg-amber-50 rounded-lg p-3 text-center w-[110px]">
+          <p class="font-semibold text-sm">pre-prod</p>
+          <p class="text-xs text-slate-500">Pre-Prod</p>
+          <p class="text-xs text-slate-400 font-mono mt-1">preprod-ns</p>
+        </div>
+        <p class="text-xs text-slate-400 mt-1">#4</p>
+      </div>
+      <div class="pipeline-arrow mt-5">&rarr;</div>
+      <div class="flex flex-col items-center min-w-[100px]">
+        <div class="border-2 border-red-300 bg-red-50 rounded-lg p-3 text-center w-[100px]">
+          <div class="flex items-center justify-center gap-1">
+            <p class="font-semibold text-sm">prod</p>
+            <span class="badge badge-red text-[10px] px-1.5 py-0">PROD</span>
+          </div>
+          <p class="text-xs text-slate-500">Production</p>
+          <p class="text-xs text-slate-400 font-mono mt-1">prod-ns</p>
+        </div>
+        <p class="text-xs text-slate-400 mt-1">#5</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Environment Details Table -->
+  <div class="card overflow-hidden">
+    <div class="p-4 border-b bg-muted/30">
+      <h2 class="text-sm font-semibold text-slate-600">Environment Details</h2>
+    </div>
+    <table>
+      <thead>
+        <tr><th>#</th><th>Name</th><th>Display Name</th><th>Namespace</th><th>Cluster</th><th>Values Folder</th><th>Prod</th><th class="w-16"></th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td class="font-medium">dev</td><td>Development</td><td class="font-mono text-sm">dev-ns</td><td class="font-mono text-sm">gke-dev</td><td class="font-mono text-sm">dev-values</td><td></td><td><button class="btn btn-ghost p-1"><i data-lucide="more-horizontal" class="w-4 h-4"></i></button></td></tr>
+        <tr><td>2</td><td class="font-medium">sit</td><td>System Integration Test</td><td class="font-mono text-sm">sit-ns</td><td class="font-mono text-sm">gke-sit</td><td class="font-mono text-sm">sit-values</td><td></td><td><button class="btn btn-ghost p-1"><i data-lucide="more-horizontal" class="w-4 h-4"></i></button></td></tr>
+        <tr><td>3</td><td class="font-medium">uat</td><td>User Acceptance Test</td><td class="font-mono text-sm">uat-ns</td><td class="font-mono text-sm">gke-uat</td><td class="font-mono text-sm">uat-values</td><td></td><td><button class="btn btn-ghost p-1"><i data-lucide="more-horizontal" class="w-4 h-4"></i></button></td></tr>
+        <tr><td>4</td><td class="font-medium">pre-prod</td><td>Pre-Production</td><td class="font-mono text-sm">preprod-ns</td><td class="font-mono text-sm">gke-preprod</td><td class="font-mono text-sm">pre-prod-values</td><td></td><td><button class="btn btn-ghost p-1"><i data-lucide="more-horizontal" class="w-4 h-4"></i></button></td></tr>
+        <tr><td>5</td><td class="font-medium">prod</td><td>Production</td><td class="font-mono text-sm">prod-ns</td><td class="font-mono text-sm">gke-prod</td><td class="font-mono text-sm">prod-values</td><td><i data-lucide="check" class="w-4 h-4 text-success"></i></td><td><button class="btn btn-ghost p-1"><i data-lucide="more-horizontal" class="w-4 h-4"></i></button></td></tr>
+      </tbody>
+    </table>
+    <div class="p-3 text-xs text-slate-400 border-t">Drag rows to reorder promotion pipeline.</div>
+  </div>
+</section>
+
+<!-- ==================== SCREEN 8: Credentials ==================== -->
+<section id="screen-credentials" class="screen p-6">
+  <div class="flex items-center gap-2 text-sm text-slate-500 mb-6">
+    <a class="hover:text-slate-700 cursor-pointer" onclick="showScreen('projects')">Projects</a>
+    <span>/</span>
+    <a class="hover:text-slate-700 cursor-pointer" onclick="showScreen('overview')">Payment Gateway</a>
+    <span>/</span><span>Credentials</span>
+  </div>
+  <div class="flex items-center justify-between mb-6">
+    <h1 class="text-3xl font-bold tracking-tight">Credentials</h1>
+    <button class="btn btn-primary"><i data-lucide="plus" class="w-4 h-4"></i> Add Credential</button>
+  </div>
+
+  <div class="card p-4 mb-6 border-blue-200 bg-blue-50 max-w-4xl flex items-start gap-3">
+    <i data-lucide="info" class="w-5 h-5 text-blue-500 mt-0.5 shrink-0"></i>
+    <div>
+      <p class="text-sm font-medium text-blue-800">Credential values are encrypted at rest and never displayed.</p>
+      <p class="text-sm text-blue-600">To update a credential, you must provide a new value.</p>
+    </div>
+  </div>
+
+  <div class="card overflow-hidden max-w-4xl">
+    <table>
+      <thead>
+        <tr><th>#</th><th>Name</th><th>Type</th><th>Expires</th><th>Status</th><th class="w-16"></th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>
+            <p class="font-mono font-medium">github-token</p>
+            <p class="text-xs text-slate-400 mt-1 flex items-center gap-1"><span class="badge badge-green text-[10px]"><i data-lucide="check-circle-2" class="w-2.5 h-2.5 mr-0.5"></i>Verified</span> Last used: 2h ago</p>
+          </td>
+          <td><span class="badge badge-outline">git-token</span></td>
+          <td>2026-12-31</td>
+          <td><span class="text-sm text-success">Valid</span></td>
+          <td><button class="btn btn-ghost p-1"><i data-lucide="more-horizontal" class="w-4 h-4"></i></button></td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>
+            <p class="font-mono font-medium">jira-api-key</p>
+            <p class="text-xs text-slate-400 mt-1 flex items-center gap-1"><span class="badge badge-green text-[10px]"><i data-lucide="check-circle-2" class="w-2.5 h-2.5 mr-0.5"></i>Verified</span> Last used: 1d ago</p>
+          </td>
+          <td><span class="badge badge-outline">jira-api-key</span></td>
+          <td class="text-slate-400">Never</td>
+          <td><span class="text-sm text-success">Valid</span></td>
+          <td><button class="btn btn-ghost p-1"><i data-lucide="more-horizontal" class="w-4 h-4"></i></button></td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>
+            <p class="font-mono font-medium">gcp-deploy-sa</p>
+            <p class="text-xs mt-1"><span class="badge badge-amber text-[10px]"><i data-lucide="alert-triangle" class="w-2.5 h-2.5 mr-0.5"></i>Expires in 4 months</span></p>
+          </td>
+          <td><span class="badge badge-outline">gcp-service-account</span></td>
+          <td class="text-warning font-medium">2026-06-15</td>
+          <td><span class="text-sm text-warning">Expiring</span></td>
+          <td><button class="btn btn-ghost p-1"><i data-lucide="more-horizontal" class="w-4 h-4"></i></button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ==================== SCREEN 9: Branch Tracker ==================== -->
+<section id="screen-branches" class="screen p-6">
+  <div class="flex items-center gap-2 text-sm text-slate-500 mb-6">
+    <a class="hover:text-slate-700 cursor-pointer" onclick="showScreen('projects')">Projects</a>
+    <span>/</span>
+    <a class="hover:text-slate-700 cursor-pointer" onclick="showScreen('overview')">Payment Gateway</a>
+    <span>/</span><span>Branch Tracker</span>
+  </div>
+  <div class="flex items-center justify-between mb-8">
+    <h1 class="text-3xl font-bold tracking-tight">Branch Tracker</h1>
+    <button class="btn btn-primary"><i data-lucide="plus" class="w-4 h-4"></i> New Branch Entry</button>
+  </div>
+
+  <!-- Active Branches -->
+  <div class="card p-6 mb-8">
+    <h2 class="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-4">Active Branches (per environment)</h2>
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
+      <div class="border-2 border-green-300 bg-green-50 rounded-lg p-4 text-center">
+        <p class="text-xs font-semibold text-slate-500 uppercase mb-2">dev</p>
+        <p class="font-mono text-sm font-medium">release/2.0.0</p>
+        <span class="badge badge-green text-[10px] mt-2">current</span>
+      </div>
+      <div class="border-2 border-green-300 bg-green-50 rounded-lg p-4 text-center">
+        <p class="text-xs font-semibold text-slate-500 uppercase mb-2">sit</p>
+        <p class="font-mono text-sm font-medium">release/1.0.0</p>
+        <span class="badge badge-green text-[10px] mt-2">current</span>
+      </div>
+      <div class="border-2 border-green-300 bg-green-50 rounded-lg p-4 text-center">
+        <p class="text-xs font-semibold text-slate-500 uppercase mb-2">uat</p>
+        <p class="font-mono text-sm font-medium">release/1.0.0</p>
+        <span class="badge badge-green text-[10px] mt-2">current</span>
+      </div>
+      <div class="border-2 border-dashed border-slate-300 bg-slate-50 rounded-lg p-4 text-center">
+        <p class="text-xs font-semibold text-slate-500 uppercase mb-2">pre-prod</p>
+        <p class="font-mono text-sm text-slate-400 font-medium">X</p>
+        <span class="badge badge-gray text-[10px] mt-2">pending</span>
+      </div>
+      <div class="border-2 border-green-300 bg-green-50 rounded-lg p-4 text-center">
+        <p class="text-xs font-semibold text-slate-500 uppercase mb-2">prod</p>
+        <p class="font-mono text-sm font-medium">release/0.9.0</p>
+        <span class="badge badge-green text-[10px] mt-2">current</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Branch History -->
+  <div class="card overflow-hidden">
+    <div class="p-4 border-b bg-muted/30 flex flex-col sm:flex-row gap-3 items-start sm:items-center justify-between">
+      <h2 class="text-sm font-semibold text-slate-600">Branch History</h2>
+      <div class="flex gap-2">
+        <select class="input text-sm" style="width:auto"><option>Active Only</option><option>All</option><option>Inactive</option></select>
+        <input class="input text-sm" style="width:180px" placeholder="Search branches...">
+      </div>
+    </div>
+    <div class="overflow-x-auto">
+      <table>
+        <thead>
+          <tr><th>#</th><th>Branch</th><th>Version</th><th>dev</th><th>sit</th><th>uat</th><th>pre-prod</th><th>prod</th><th>Active</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td class="font-mono font-medium">release/2.0.0</td>
+            <td>2.0.0</td>
+            <td><span class="badge badge-green text-xs">2.0.0</span></td>
+            <td class="text-center text-slate-300 cursor-pointer hover:text-accent" title="Click to promote">X</td>
+            <td class="text-center text-slate-300 cursor-pointer hover:text-accent" title="Click to promote">X</td>
+            <td class="text-center text-slate-300 cursor-pointer hover:text-accent" title="Click to promote">X</td>
+            <td class="text-center text-slate-300 cursor-pointer hover:text-accent" title="Click to promote">X</td>
+            <td><div class="w-9 h-5 bg-accent rounded-full relative"><div class="w-4 h-4 bg-white rounded-full absolute top-0.5 right-0.5"></div></div></td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td class="font-mono font-medium">release/1.0.0</td>
+            <td>1.0.0</td>
+            <td><span class="badge badge-green text-xs">1.0.0</span></td>
+            <td><span class="badge badge-green text-xs">1.0.0</span></td>
+            <td><span class="badge badge-green text-xs">1.0.0</span></td>
+            <td class="text-center text-slate-300 cursor-pointer hover:text-accent" title="Click to promote">X</td>
+            <td class="text-center text-slate-300 cursor-pointer hover:text-accent" title="Click to promote">X</td>
+            <td><div class="w-9 h-5 bg-accent rounded-full relative"><div class="w-4 h-4 bg-white rounded-full absolute top-0.5 right-0.5"></div></div></td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td class="font-mono font-medium">release/0.9.0</td>
+            <td>0.9.0</td>
+            <td><span class="badge badge-green text-xs">0.9.0</span></td>
+            <td><span class="badge badge-green text-xs">0.9.0</span></td>
+            <td><span class="badge badge-green text-xs">0.9.0</span></td>
+            <td><span class="badge badge-green text-xs">0.9.0</span></td>
+            <td><span class="badge badge-green text-xs">0.9.0</span></td>
+            <td><div class="w-9 h-5 bg-slate-200 rounded-full relative"><div class="w-4 h-4 bg-white rounded-full absolute top-0.5 left-0.5"></div></div></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="p-3 text-xs text-slate-400 border-t">Click an "X" cell to promote a branch to that environment.</div>
+  </div>
+</section>
+
+<!-- ==================== SCREEN 10: Config Export ==================== -->
+<section id="screen-config" class="screen p-6">
+  <div class="flex items-center gap-2 text-sm text-slate-500 mb-6">
+    <a class="hover:text-slate-700 cursor-pointer" onclick="showScreen('projects')">Projects</a>
+    <span>/</span>
+    <a class="hover:text-slate-700 cursor-pointer" onclick="showScreen('overview')">Payment Gateway</a>
+    <span>/</span><span>Config Export</span>
+  </div>
+  <div class="flex items-center justify-between mb-8">
+    <h1 class="text-3xl font-bold tracking-tight">Configuration Export</h1>
+    <div class="flex gap-2">
+      <button class="btn btn-outline"><i data-lucide="refresh-cw" class="w-4 h-4"></i> Refresh</button>
+      <button class="btn btn-secondary"><i data-lucide="link" class="w-4 h-4"></i> Copy URL</button>
+    </div>
+  </div>
+
+  <!-- Validation Summary -->
+  <div class="card p-6 mb-6 max-w-3xl">
+    <h2 class="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-4">Validation Summary</h2>
+    <div class="space-y-3">
+      <div class="flex items-center gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-success shrink-0"></i><span class="text-sm">Project metadata complete</span></div>
+      <div class="flex items-center gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-success shrink-0"></i><span class="text-sm">Promotion repo configured and verified</span></div>
+      <div class="flex items-center gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-success shrink-0"></i><span class="text-sm">12 source repos registered (11 verified, 1 failed)</span></div>
+      <div class="flex items-center gap-3 pl-8"><i data-lucide="alert-triangle" class="w-4 h-4 text-warning shrink-0"></i><span class="text-sm text-warning">service-notif: verification failed</span></div>
+      <div class="flex items-center gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-success shrink-0"></i><span class="text-sm">5 environments configured</span></div>
+      <div class="flex items-center gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-success shrink-0"></i><span class="text-sm">2 credentials stored</span></div>
+      <div class="flex items-center gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-success shrink-0"></i><span class="text-sm">Branch tracker has 3 entries (2 active)</span></div>
+    </div>
+  </div>
+
+  <!-- API Endpoint -->
+  <div class="card p-4 mb-6 max-w-3xl">
+    <p class="text-sm font-medium text-slate-500 mb-2">API Endpoint</p>
+    <div class="flex items-center gap-2 bg-muted p-3 rounded-md">
+      <code class="font-mono text-sm flex-1">GET /api/projects/a1b2c3d4-e5f6-7890-abcd-ef1234567890/config</code>
+      <button class="btn btn-outline text-sm py-1.5 shrink-0">Copy</button>
+    </div>
+  </div>
+
+  <!-- JSON Viewer -->
+  <div class="max-w-3xl">
+    <div class="flex items-center justify-between mb-2">
+      <h2 class="text-sm font-semibold text-slate-500 uppercase tracking-wider">Configuration JSON</h2>
+      <button class="btn btn-outline text-sm py-1.5"><i data-lucide="copy" class="w-4 h-4"></i> Copy JSON</button>
+    </div>
+    <div class="json-viewer rounded-lg">{
+  <span class="json-key">"project"</span>: {
+    <span class="json-key">"id"</span>: <span class="json-string">"a1b2c3d4-e5f6-7890-abcd-ef1234567890"</span>,
+    <span class="json-key">"name"</span>: <span class="json-string">"payment-gateway"</span>,
+    <span class="json-key">"displayName"</span>: <span class="json-string">"Payment Gateway Service"</span>,
+    <span class="json-key">"team"</span>: <span class="json-string">"payments-team"</span>,
+    <span class="json-key">"teamEmail"</span>: <span class="json-string">"pay-team@company.com"</span>,
+    <span class="json-key">"status"</span>: <span class="json-string">"active"</span>
+  },
+  <span class="json-key">"promotionRepo"</span>: {
+    <span class="json-key">"repoUrl"</span>: <span class="json-string">"https://github.com/org/promo-helm-charts.git"</span>,
+    <span class="json-key">"helmChartsPath"</span>: <span class="json-string">"helm-charts"</span>,
+    <span class="json-key">"defaultBranch"</span>: <span class="json-string">"master"</span>,
+    <span class="json-key">"verified"</span>: <span class="json-bool">true</span>
+  },
+  <span class="json-key">"sourceRepos"</span>: [
+    { <span class="json-key">"name"</span>: <span class="json-string">"service-auth"</span>, <span class="json-key">"type"</span>: <span class="json-string">"app"</span>, <span class="json-key">"verified"</span>: <span class="json-bool">true</span> },
+    { <span class="json-key">"name"</span>: <span class="json-string">"service-admin"</span>, <span class="json-key">"type"</span>: <span class="json-string">"app"</span>, <span class="json-key">"verified"</span>: <span class="json-bool">true</span> },
+    { <span class="json-key">"name"</span>: <span class="json-string">"service-pay"</span>, <span class="json-key">"type"</span>: <span class="json-string">"app"</span>, <span class="json-key">"verified"</span>: <span class="json-bool">true</span> },
+    { <span class="json-key">"name"</span>: <span class="json-string">"service-notif"</span>, <span class="json-key">"type"</span>: <span class="json-string">"app"</span>, <span class="json-key">"verified"</span>: <span class="json-bool">false</span> },
+    { <span class="json-key">"name"</span>: <span class="json-string">"db-migrate"</span>, <span class="json-key">"type"</span>: <span class="json-string">"sql-db"</span>, <span class="json-key">"verified"</span>: <span class="json-bool">true</span> },
+    { <span class="json-key">"name"</span>: <span class="json-string">"db-aql-core"</span>, <span class="json-key">"type"</span>: <span class="json-string">"aql-db"</span>, <span class="json-key">"verified"</span>: <span class="json-bool">true</span> },
+    { <span class="json-key">"name"</span>: <span class="json-string">"infra-tf"</span>, <span class="json-key">"type"</span>: <span class="json-string">"infra"</span>, <span class="json-key">"verified"</span>: <span class="json-bool">true</span> }
+  ],
+  <span class="json-key">"environments"</span>: [
+    { <span class="json-key">"name"</span>: <span class="json-string">"dev"</span>, <span class="json-key">"promotionOrder"</span>: <span class="json-number">1</span>, <span class="json-key">"namespace"</span>: <span class="json-string">"dev-ns"</span> },
+    { <span class="json-key">"name"</span>: <span class="json-string">"sit"</span>, <span class="json-key">"promotionOrder"</span>: <span class="json-number">2</span>, <span class="json-key">"namespace"</span>: <span class="json-string">"sit-ns"</span> },
+    { <span class="json-key">"name"</span>: <span class="json-string">"uat"</span>, <span class="json-key">"promotionOrder"</span>: <span class="json-number">3</span>, <span class="json-key">"namespace"</span>: <span class="json-string">"uat-ns"</span> },
+    { <span class="json-key">"name"</span>: <span class="json-string">"pre-prod"</span>, <span class="json-key">"promotionOrder"</span>: <span class="json-number">4</span>, <span class="json-key">"namespace"</span>: <span class="json-string">"preprod-ns"</span> },
+    { <span class="json-key">"name"</span>: <span class="json-string">"prod"</span>, <span class="json-key">"promotionOrder"</span>: <span class="json-number">5</span>, <span class="json-key">"namespace"</span>: <span class="json-string">"prod-ns"</span>, <span class="json-key">"isProduction"</span>: <span class="json-bool">true</span> }
+  ],
+  <span class="json-key">"activeBranches"</span>: {
+    <span class="json-key">"dev"</span>: <span class="json-string">"release/2.0.0"</span>,
+    <span class="json-key">"sit"</span>: <span class="json-string">"release/1.0.0"</span>,
+    <span class="json-key">"uat"</span>: <span class="json-string">"release/1.0.0"</span>,
+    <span class="json-key">"pre-prod"</span>: <span class="json-bool">null</span>,
+    <span class="json-key">"prod"</span>: <span class="json-string">"release/0.9.0"</span>
+  },
+  <span class="json-key">"credentials"</span>: [
+    { <span class="json-key">"name"</span>: <span class="json-string">"github-token"</span>, <span class="json-key">"type"</span>: <span class="json-string">"git-token"</span>, <span class="json-key">"expiresAt"</span>: <span class="json-string">"2026-12-31"</span> },
+    { <span class="json-key">"name"</span>: <span class="json-string">"jira-api-key"</span>, <span class="json-key">"type"</span>: <span class="json-string">"jira-api-key"</span>, <span class="json-key">"expiresAt"</span>: <span class="json-bool">null</span> },
+    { <span class="json-key">"name"</span>: <span class="json-string">"gcp-deploy-sa"</span>, <span class="json-key">"type"</span>: <span class="json-string">"gcp-service-account"</span>, <span class="json-key">"expiresAt"</span>: <span class="json-string">"2026-06-15"</span> }
+  ]
+}</div>
+  </div>
+</section>
+
+</main>
+
+<!-- JavaScript -->
+<script>
+  // Initialize Lucide icons
+  lucide.createIcons();
+
+  function showScreen(id) {
+    // Hide all screens
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    // Show target screen
+    const target = document.getElementById('screen-' + id);
+    if (target) target.classList.add('active');
+    // Update sidebar
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    const navItem = document.querySelector('.nav-item[data-screen="' + id + '"]');
+    if (navItem) navItem.classList.add('active');
+    // Close mobile sidebar
+    closeSidebar();
+    // Scroll to top
+    window.scrollTo(0, 0);
+    // Re-init icons for newly visible content
+    lucide.createIcons();
+  }
+
+  let currentWizardStep = 1;
+
+  function showWizardStep(step) {
+    currentWizardStep = step;
+    // Show wizard screen first
+    showScreen('wizard');
+    // Hide all step content
+    document.querySelectorAll('.wizard-content').forEach(s => s.style.display = 'none');
+    // Show target step
+    const target = document.getElementById('wizard-step-' + step);
+    if (target) target.style.display = 'block';
+    // Update step indicator
+    for (let i = 1; i <= 5; i++) {
+      const dot = document.getElementById('wdot' + i);
+      const label = document.getElementById('wlabel' + i);
+      const line = document.getElementById('wline' + i);
+      if (dot) {
+        dot.className = 'wizard-dot ' + (i < step ? 'completed' : i === step ? 'current' : 'upcoming');
+        dot.innerHTML = i < step ? '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>' : i;
+      }
+      if (label) {
+        label.className = 'text-xs ' + (i < step ? 'font-medium text-success' : i === step ? 'font-medium text-accent' : 'text-slate-400');
+      }
+      if (line) {
+        line.className = 'wizard-line ' + (i < step ? 'completed' : 'upcoming');
+      }
+    }
+    lucide.createIcons();
+  }
+
+  function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('open');
+    document.getElementById('mobileOverlay').classList.toggle('open');
+  }
+
+  function closeSidebar() {
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('mobileOverlay').classList.remove('open');
+  }
+</script>
+</body>
+</html>
