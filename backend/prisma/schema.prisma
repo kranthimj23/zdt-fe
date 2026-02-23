@@ -1,0 +1,135 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Project {
+  id          String   @id @default(uuid()) @db.Uuid
+  name        String   @unique
+  displayName String   @map("display_name")
+  description String?
+  team        String
+  teamEmail   String   @map("team_email")
+  status      ProjectStatus @default(active)
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  promotionRepo  PromotionRepo?
+  sourceRepos    SourceRepo[]
+  environments   Environment[]
+  credentials    Credential[]
+  branchTrackers BranchTracker[]
+
+  @@map("projects")
+}
+
+enum ProjectStatus {
+  active
+  inactive
+  archived
+}
+
+model PromotionRepo {
+  id              String   @id @default(uuid()) @db.Uuid
+  projectId       String   @unique @map("project_id") @db.Uuid
+  repoUrl         String   @map("repo_url")
+  defaultBranch   String   @default("master") @map("default_branch")
+  helmChartsPath  String   @default("helm-charts") @map("helm_charts_path")
+  metaSheetPath   String?  @map("meta_sheet_path")
+  isAccessible    Boolean  @default(false) @map("is_accessible")
+  lastVerifiedAt  DateTime? @map("last_verified_at")
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  project Project @relation(fields: [projectId], references: [id])
+
+  @@map("promotion_repos")
+}
+
+model SourceRepo {
+  id              String   @id @default(uuid()) @db.Uuid
+  projectId       String   @map("project_id") @db.Uuid
+  name            String
+  repoUrl         String   @map("repo_url")
+  repoType        RepoType @map("repo_type")
+  defaultBranch   String   @default("main") @map("default_branch")
+  helmValuesPath  String?  @map("helm_values_path")
+  isAccessible    Boolean  @default(false) @map("is_accessible")
+  lastVerifiedAt  DateTime? @map("last_verified_at")
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  project Project @relation(fields: [projectId], references: [id])
+
+  @@unique([projectId, repoUrl])
+  @@map("source_repos")
+}
+
+enum RepoType {
+  app
+  aql_db  @map("aql-db")
+  sql_db  @map("sql-db")
+  infra
+}
+
+model Environment {
+  id                  String   @id @default(uuid()) @db.Uuid
+  projectId           String   @map("project_id") @db.Uuid
+  name                String
+  displayName         String   @map("display_name")
+  promotionOrder      Int      @map("promotion_order")
+  kubernetesNamespace String?  @map("kubernetes_namespace")
+  clusterName         String?  @map("cluster_name")
+  valuesFolder        String   @map("values_folder")
+  isProduction        Boolean  @default(false) @map("is_production")
+  createdAt           DateTime @default(now()) @map("created_at")
+  updatedAt           DateTime @updatedAt @map("updated_at")
+
+  project Project @relation(fields: [projectId], references: [id])
+
+  @@unique([projectId, name])
+  @@unique([projectId, promotionOrder])
+  @@map("environments")
+}
+
+model Credential {
+  id          String          @id @default(uuid()) @db.Uuid
+  projectId   String          @map("project_id") @db.Uuid
+  name        String
+  type        CredentialType
+  value       String          // Encrypted at rest (AES-256-GCM)
+  expiresAt   DateTime?       @map("expires_at")
+  createdAt   DateTime        @default(now()) @map("created_at")
+  updatedAt   DateTime        @updatedAt @map("updated_at")
+
+  project Project @relation(fields: [projectId], references: [id])
+
+  @@unique([projectId, name])
+  @@map("credentials")
+}
+
+enum CredentialType {
+  git_token       @map("git-token")
+  jira_api_key    @map("jira-api-key")
+  gcp_service_account @map("gcp-service-account")
+  generic
+}
+
+model BranchTracker {
+  id                  String   @id @default(uuid()) @db.Uuid
+  projectId           String   @map("project_id") @db.Uuid
+  branchName          String   @map("branch_name")
+  environmentStatuses Json     @map("environment_statuses")
+  version             String
+  isActive            Boolean  @default(true) @map("is_active")
+  createdAt           DateTime @default(now()) @map("created_at")
+  updatedAt           DateTime @updatedAt @map("updated_at")
+
+  project Project @relation(fields: [projectId], references: [id])
+
+  @@map("branch_trackers")
+}
