@@ -1,0 +1,60 @@
+{
+    "invalidNames": [
+        {
+            "input": "Payment-Gateway",
+            "reason": "uppercase letters"
+        },
+        {
+            "input": "payment gateway",
+            "reason": "contains space"
+        },
+        {
+            "input": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "reason": "exceeds 63 characters"
+        },
+        {
+            "input": "payment_gateway!",
+            "reason": "special characters"
+        },
+        {
+            "input": "-payment",
+            "reason": "starts with hyphen"
+        },
+        {
+            "input": "payment-",
+            "reason": "ends with hyphen"
+        }
+    ],
+    "invalidEmails": [
+        {
+            "input": "not-an-email",
+            "reason": "missing @ and domain"
+        },
+        {
+            "input": "@example.com",
+            "reason": "missing local part"
+        },
+        {
+            "input": "user@",
+            "reason": "missing domain"
+        }
+    ],
+    "invalidRepoUrls": [
+        {
+            "input": "git@github.com:org/repo.git",
+            "reason": "SSH URL, not HTTPS"
+        },
+        {
+            "input": "https://example.com/not-a-repo",
+            "reason": "does not end in .git"
+        },
+        {
+            "input": "",
+            "reason": "empty string"
+        },
+        {
+            "input": "https://user:pass@github.com/org/repo.git",
+            "reason": "embedded credentials"
+        }
+    ]
+}

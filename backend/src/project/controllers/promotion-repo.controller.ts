@@ -25,6 +25,7 @@ export class PromotionRepoController {
     }
 
     @Post('verify')
+    @HttpCode(200)
     async verifyConnectivity(@Param('projectId') projectId: string) {
         return this.repoVerificationService.verifyPromotionRepo(projectId);
     }

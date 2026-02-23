@@ -13,6 +13,8 @@ import { EnvironmentController } from './controllers/environment.controller';
 import { CredentialController } from './controllers/credential.controller';
 import { BranchTrackerController } from './controllers/branch-tracker.controller';
 
+import { MigrationController } from './controllers/migration.controller';
+
 @Module({
     controllers: [
         ProjectController,
@@ -21,6 +23,7 @@ import { BranchTrackerController } from './controllers/branch-tracker.controller
         EnvironmentController,
         CredentialController,
         BranchTrackerController,
+        MigrationController,
     ],
     providers: [
         ProjectService,

@@ -1,4 +1,4 @@
-import { Injectable, ConflictException } from '@nestjs/common';
+import { Injectable, ConflictException, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { RepoVerificationService } from './services/repo-verification.service';
 import { CreateProjectDto } from './dto/create-project.dto';
@@ -15,6 +15,12 @@ export class ProjectService {
     ) { }
 
     async createProject(dto: CreateProjectDto) {
+        // Business Rule: Name must be lowercase k8s-style
+        const nameRegex = /^[a-z0-9]([-a-z0-9]*[a-z0-9])?$/;
+        if (!nameRegex.test(dto.name) || dto.name.length > 63) {
+            throw new Error(`Invalid project name format: ${dto.name}`);
+        }
+
         const existing = await this.prisma.project.findUnique({ where: { name: dto.name } });
         if (existing) {
             throw new ConflictException(`Project "${dto.name}" already exists`);
@@ -39,11 +45,19 @@ export class ProjectService {
     }
 
     async getProjectById(id: string) {
-        return this.prisma.project.findUniqueOrThrow({ where: { id } });
+        try {
+            return await this.prisma.project.findUniqueOrThrow({ where: { id } });
+        } catch {
+            throw new NotFoundException(`Project with ID "${id}" not found`);
+        }
     }
 
     async getProjectByName(name: string) {
-        return this.prisma.project.findUniqueOrThrow({ where: { name } });
+        try {
+            return await this.prisma.project.findUniqueOrThrow({ where: { name } });
+        } catch {
+            throw new NotFoundException(`Project "${name}" not found`);
+        }
     }
 
     async updateProject(id: string, dto: UpdateProjectDto) {

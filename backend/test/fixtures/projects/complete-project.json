@@ -1,0 +1,109 @@
+{
+    "project": {
+        "name": "payment-gateway",
+        "displayName": "Payment Gateway Service",
+        "description": "Handles all payment processing for the platform",
+        "team": "payments-team",
+        "teamEmail": "payments@example.com"
+    },
+    "promotionRepo": {
+        "repoUrl": "https://github.com/org/promo-helm-charts.git",
+        "defaultBranch": "master",
+        "helmChartsPath": "helm-charts",
+        "metaSheetPath": "meta-sheet.xlsx"
+    },
+    "sourceRepos": [
+        {
+            "name": "service-auth",
+            "repoUrl": "https://github.com/org/service-auth.git",
+            "repoType": "app",
+            "defaultBranch": "main"
+        },
+        {
+            "name": "service-admin",
+            "repoUrl": "https://github.com/org/service-admin.git",
+            "repoType": "app",
+            "defaultBranch": "main"
+        },
+        {
+            "name": "service-payment",
+            "repoUrl": "https://github.com/org/service-payment.git",
+            "repoType": "app",
+            "defaultBranch": "main"
+        },
+        {
+            "name": "db-auth",
+            "repoUrl": "https://github.com/org/db-auth.git",
+            "repoType": "aql-db",
+            "defaultBranch": "main"
+        },
+        {
+            "name": "infra-core",
+            "repoUrl": "https://github.com/org/infra-core.git",
+            "repoType": "infra",
+            "defaultBranch": "main"
+        }
+    ],
+    "environments": [
+        {
+            "name": "dev",
+            "displayName": "Development",
+            "promotionOrder": 1,
+            "valuesFolder": "dev-values",
+            "isProduction": false
+        },
+        {
+            "name": "sit",
+            "displayName": "SIT",
+            "promotionOrder": 2,
+            "valuesFolder": "sit-values",
+            "isProduction": false
+        },
+        {
+            "name": "uat",
+            "displayName": "UAT",
+            "promotionOrder": 3,
+            "valuesFolder": "uat-values",
+            "isProduction": false
+        },
+        {
+            "name": "pre-prod",
+            "displayName": "Pre-Production",
+            "promotionOrder": 4,
+            "valuesFolder": "pre-prod-values",
+            "isProduction": false
+        },
+        {
+            "name": "prod",
+            "displayName": "Production",
+            "promotionOrder": 5,
+            "valuesFolder": "prod-values",
+            "isProduction": true
+        }
+    ],
+    "credentials": [
+        {
+            "name": "github-token",
+            "type": "git-token",
+            "value": "ghp_test_token_abc123def456"
+        },
+        {
+            "name": "jira-api-key",
+            "type": "jira-api-key",
+            "value": "jira_test_key_xyz789"
+        }
+    ],
+    "branches": [
+        {
+            "branchName": "release/2.0.0",
+            "version": "2.0.0",
+            "environmentStatuses": {
+                "dev": "release/2.0.0",
+                "sit": "release/1.0.0",
+                "uat": "X",
+                "pre-prod": "X",
+                "prod": "X"
+            }
+        }
+    ]
+}
