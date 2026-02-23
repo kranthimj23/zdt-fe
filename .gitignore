@@ -28,3 +28,5 @@ __pycache__/
 # Claude Code files
 CLAUDE.md
 .claude/
+
+*.log
