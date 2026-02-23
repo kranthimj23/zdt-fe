@@ -1,0 +1,122 @@
+//This script implements the below logic:
+//1) Checks if the release-note is updated based on the commit history.
+//2) If the release-note is updated, then generate the config.
+
+pipeline {
+
+    agent any 
+ 
+    environment {
+        PYTHON_EXEC = 'python3.11'  // Or adjust to 'python' if needed
+        GIT_CREDENTIALS_ID = credentials('jenkins-token')
+    }
+
+    // Declare executePython at pipeline level to share across stages
+
+    // Use a script block to initialize it
+
+    options { skipDefaultCheckout() }  // Optional: skip automatic checkout if you want manual control
+    stages {
+        stage('Checkout with credentials') {
+            steps {
+                deleteDir()
+                script {
+                    withCredentials([string(credentialsId: 'jenkins-token', variable: 'GIT_TOKEN')]) {
+                    checkout([
+                        $class: 'GitSCM',
+                        branches: [[name: "*/${env.promotion_branch}"]],
+                        userRemoteConfigs: [[
+                            url: "${env.github_url}",
+                            credentialsId: env.GIT_CREDENTIALS_ID
+                        ]]
+                        ])
+                    }
+                }
+            }
+        }
+ 
+        stage('Check commits in release_note') {
+            steps {
+                script {
+                    echo "Checking commits in folder: release_note"
+                    def commits = sh(
+                        script: "git log -n 10 --pretty=format:\"%H|%s\" -- helm-charts/${env.higher_env}-values/release_note/*.xlsx",
+                        returnStdout: true
+                    ).trim()
+                    echo commits
+
+                    // Use flexible space matching
+                    def pattern = ~("Updated the release note in the branch:" + env.promotion_branch)
+                    // Use a pipeline variable to share state
+                    // Initialize executePython if not yet defined
+
+                    if (!binding.hasVariable('executePython')) {
+                        executePython = false
+                    }
+
+                    commits.split('\n').each { line ->
+                        def parts = line.split('\\|', 2)
+                        if (parts.length == 2) {
+                            def commitMsg = parts[1]
+                            echo "Checking commit message: ${commitMsg}"
+                            if ((commitMsg =~ pattern).matches()) {
+                                echo "Found matching commit message: ${commitMsg}"
+                                executePython = true
+                            }
+                        }
+                    }
+                }
+            }
+        }
+ 
+        stage('Run Python scripts') {
+            steps {
+                script {
+                    if (executePython) {
+                        configFileProvider([
+                            configFile(fileId: 'generate-config', targetLocation: 'generate-config.py'),
+                            configFile(fileId: 'drift_promotion', targetLocation: 'drift_promotion.py')
+                        ]) {
+                            withCredentials([
+                                string(credentialsId: 'jenkins-token', variable: 'GIT_TOKEN')
+                            ]) {
+                                def targetFile = "${WORKSPACE}/helm-charts/${env.higher_env}-values/db-scripts/AQL/${env.higher_env}.txt"
+        
+                                if (fileExists(targetFile)) {
+                                    echo "File exists: ${targetFile}"
+                                    
+                                    // ✅ Trigger another pipeline (corrected syntax)
+                                    build job: 'ansible_sparse_execution_cd',
+                                        parameters: [
+                                            string(name: 'higher_env', value: env.higher_env),
+                                            string(name: 'promotion_branch_x', value: env.promotion_branch)
+                                        ],
+                                        wait: false
+                                } else {
+                                    echo "File does NOT exist: ${targetFile}"
+                                }
+
+                                // ✅ Now run the generate-config script
+                                def result_infra = sh(
+                                    script: "${env.PYTHON_EXEC} drift_promotion.py ${env.github_url} ${env.promotion_branch} ${env.higher_env}",
+                                    returnStdout: true
+                                ).trim()
+                                echo result_infra
+        
+                                // ✅ Now run the generate-config script
+                                def result = sh(
+                                    script: "${env.PYTHON_EXEC} generate-config.py ${env.github_url} ${env.promotion_branch_x_1} ${env.promotion_branch} ${env.lower_env} ${env.higher_env}",
+                                    returnStdout: true
+                                ).trim()
+                                echo result
+                            }
+                        }
+                    } else {
+                        echo "No matching commit messages found. Skipping Python script execution."
+                        error("No matching commit message found.")
+                    }
+                }
+            }
+        }
+    }
+}

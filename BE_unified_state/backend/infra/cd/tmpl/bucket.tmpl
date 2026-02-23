@@ -1,0 +1,50 @@
+buckets = {
+<<bucket_name>>  = {
+
+        storage_class               = "<<storage_class>>"
+
+        force_destroy               = <<force_destroy>>
+
+        uniform_bucket_level_access = <<uniform_bucket_level_access>>
+
+        enable_versioning           = <<enable_versioning>>
+
+        retention_policy            = <<retention_policy>>
+
+        labels                      = <<labels>>
+
+        lifecycle_rules = [
+
+          {
+
+            action_type = "<<action_type>>"
+
+            condition = {
+
+              age = <<age>>
+
+            }
+
+          }
+
+        ]
+
+        cors = [
+
+          {
+
+                origin          = ["<<origin>>"]
+
+                method          = ["<<method>>"]
+
+                response_header = ["<<response_header>>"]
+
+                max_age_seconds = <<max_age_seconds>>
+
+          }
+
+        ]
+
+  },
+
+}
