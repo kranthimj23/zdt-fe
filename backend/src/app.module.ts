@@ -3,6 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { PrismaModule } from './prisma/prisma.module';
 import { ProjectModule } from './project/project.module';
+import { CDScriptModule } from './cd-script/cd-script.module';
 import { CacheModule } from '@nestjs/cache-manager';
 import { ConfigModule } from '@nestjs/config';
 
@@ -12,6 +13,7 @@ import { ConfigModule } from '@nestjs/config';
     CacheModule.register({ isGlobal: true }),
     PrismaModule,
     ProjectModule,
+    CDScriptModule,
   ],
   controllers: [AppController],
   providers: [AppService],

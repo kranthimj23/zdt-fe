@@ -16,10 +16,31 @@ export default function Sidebar() {
             <nav>
                 <div style={{ marginBottom: '1.5rem' }}>
                     <p style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--muted-foreground)', marginBottom: '0.5rem', textTransform: 'uppercase' }}>General</p>
-                    <ul style={{ listStyle: 'none' }}>
+                    <ul style={{ listStyle: 'none', display: 'grid', gap: '0.25rem' }}>
                         <li>
                             <a href="/projects" className={`btn ${pathname === '/projects' ? 'btn-primary' : 'btn-outline'}`} style={{ width: '100%', justifyContent: 'flex-start', border: pathname === '/projects' ? 'none' : undefined }}>
                                 Dashboard
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div style={{ marginBottom: '1.5rem' }}>
+                    <p style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--muted-foreground)', marginBottom: '0.5rem', textTransform: 'uppercase' }}>Release Management</p>
+                    <ul style={{ listStyle: 'none', display: 'grid', gap: '0.25rem' }}>
+                        <li>
+                            <a href="/release-notes" className={`btn ${pathname === '/release-notes' ? 'btn-primary' : 'btn-outline'}`} style={{ width: '100%', justifyContent: 'flex-start', border: pathname === '/release-notes' ? 'none' : 'none' }}>
+                                Create Release Note
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/generate-config" className={`btn ${pathname === '/generate-config' ? 'btn-primary' : 'btn-outline'}`} style={{ width: '100%', justifyContent: 'flex-start', border: pathname === '/generate-config' ? 'none' : 'none' }}>
+                                Generate Config
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/deploy" className={`btn ${pathname === '/deploy' ? 'btn-primary' : 'btn-outline'}`} style={{ width: '100%', justifyContent: 'flex-start', border: pathname === '/deploy' ? 'none' : 'none' }}>
+                                Deploy
                             </a>
                         </li>
                     </ul>
