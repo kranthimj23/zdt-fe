@@ -3,10 +3,10 @@ import sys
 import os
 import tempfile
 
-from git_helpers import (
-    inject_git_token,
+from utilities.git_helpers import (
     clone_single_branch_and_checkout,
 )
+from utilities.helpers import tokenize_url as inject_git_token
  
  
 def deploy_service(text_file, env, env_namespace):

@@ -18,7 +18,7 @@ envs = []
 changes = []
 
 
-def compare_json_files(le_old_data, le_new_data, he_old_data):
+def compare_json_files(le_old_data, le_new_data, he_old_data, envs):
     changes = []
  
     # Check for changes in the JSON files
@@ -27,7 +27,7 @@ def compare_json_files(le_old_data, le_new_data, he_old_data):
             modified_json = dump_and_replace(le_new_data[root], lower_env=envs[0], higher_env=envs[1])
             changes.append((root, 'add', '', json.dumps(le_new_data[root], indent=4), '', modified_json, '', 'root object added'))
         else:
-            compare(le_old_data[root], le_new_data[root], root, changes, he_old_data[root])
+            compare(le_old_data[root], le_new_data[root], root, changes, he_old_data[root], envs)
  
     for root in le_old_data.keys():
         if root not in le_new_data:
@@ -245,7 +245,7 @@ def main():
     le_x_json_data = prepare_data(target_folder_x, envs[0])
     he_x_1_json_data = prepare_data(target_folder_x_1, envs[1])
 
-    changes = compare_json_files(le_x_1_json_data, le_x_json_data, he_x_1_json_data)
+    changes = compare_json_files(le_x_1_json_data, le_x_json_data, he_x_1_json_data, envs)
     write_changes_to_excel(changes, release_note_path, envs)
 
     yaml_path = os.path.dirname(fetch_json(target_folder_x, envs[0]))

@@ -1,4 +1,8 @@
-def compare(le_old, le_new, root, changes, he_old, path=''):
+import json
+from utilities.helpers import get_parent_path
+from utilities.json_and_yaml_helpers import dump_and_replace
+
+def compare(le_old, le_new, root, changes, he_old, envs, path=''):
     # Handle dictionary structures
     if isinstance(le_old, dict) and isinstance(le_new, dict):
 
@@ -73,6 +77,7 @@ def compare(le_old, le_new, root, changes, he_old, path=''):
                     root,
                     changes,
                     he_val,
+                    envs,
                     new_key_path
                 )
 
@@ -81,7 +86,7 @@ def compare(le_old, le_new, root, changes, he_old, path=''):
         if all(isinstance(i, dict) for i in le_old) and all(isinstance(i, dict) for i in le_new):
             # Check if both lists are not empty
             if le_old and le_new and "name" in le_old[0] and "name" in le_new[0]:
-                compare_list_of_dicts(le_old, le_new, root, changes, he_old, path)
+                compare_list_of_dicts(le_old, le_new, root, changes, he_old, envs, path)
             else:
                 # Handle lists without "name" key or if lists are empty
                 for i, le_old_item in enumerate(le_old):
@@ -107,7 +112,7 @@ def compare(le_old, le_new, root, changes, he_old, path=''):
             changes.append((root, 'modify', path, json.dumps(le_new, indent=4), json.dumps(le_old, indent=4) ,modified_json,json.dumps(he_old, indent=4) ,'Modified'))
 
 
-def compare_list_of_dicts(le_old_list, le_new_list, root, changes, he_old_list, path=''):
+def compare_list_of_dicts(le_old_list, le_new_list, root, changes, he_old_list, envs, path=''):
 
     le_old_dict = {i["name"]: i for i in le_old_list if "name" in i}
     le_new_dict = {i["name"]: i for i in le_new_list if "name" in i}

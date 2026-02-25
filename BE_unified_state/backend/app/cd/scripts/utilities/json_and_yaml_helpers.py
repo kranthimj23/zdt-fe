@@ -48,6 +48,8 @@ def read_yaml_files_to_json(folder_path):
 
 def dump_and_replace(json_obj, lower_env, higher_env):
     json_str = json.dumps(json_obj, indent=4)
+    if lower_env and higher_env:
+        json_str = json_str.replace(lower_env, higher_env)
     return json_str
 
 
